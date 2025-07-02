@@ -13,8 +13,8 @@ import { RouterOutlet } from '@angular/router';
       <nav>
         <ul>
           <li><a href="#">Home</a></li>
-          <li><a href="#">About</a></li>
-          <li><a href="#">Contact</a></li>
+          <li><a href="#">Suppliers</a></li>
+          <li><a href="#">Items</a></li>
         </ul>
       </nav>
       <main>
@@ -104,5 +104,5 @@ import { RouterOutlet } from '@angular/router';
   `
 })
 export class AppComponent {
-  title = 'ets-client';
+  title = 'ims-client';
 }

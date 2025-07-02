@@ -35,8 +35,8 @@ import { environment } from '../../environments/environment';
       font-size: 20px;
       margin-bottom: 16px;
       color: rgb(112, 177, 247);
-    },
-    
+    }
+
     .server-message-box {
       background-color: #f0f8ff;
       border-left: 4px solid #007bff;
