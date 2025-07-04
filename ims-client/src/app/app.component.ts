@@ -12,9 +12,9 @@ import { RouterOutlet } from '@angular/router';
       </header>
       <nav>
         <ul>
-          <li><a href="#">Home</a></li>
-          <li><a href="#">Suppliers</a></li>
-          <li><a href="#">Items</a></li>
+          <li><a href="/">Home</a></li>
+          <li><a href="/suppliers">Suppliers</a></li>
+          <li><a href="/items">Items</a></li>
         </ul>
       </nav>
       <main>

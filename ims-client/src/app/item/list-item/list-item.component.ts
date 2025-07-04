@@ -11,6 +11,7 @@ import { HttpClient } from '@angular/common/http';
   template: `
     <div class="item-page">
       <h1 class="item-page__title">Item List</h1>
+
       <form class="form" [formGroup]="itemListForm" (ngSubmit)="onSubmit()">
         <div class="form__group">
           <select required class="select" formControlName="category" id="category" name="category">
@@ -57,20 +58,52 @@ import { HttpClient } from '@angular/common/http';
           </tbody>
         </table>
       } @else {
-        <p class="item-page__no-items">No items found, consider adding one...</p>"
+        <p class="item-page__no-items">No items found, consider adding one...</p>
       }
     </div>
   `,
   styles: `
+    /*
     .item-page {
-      max-width: 80%;
-      margin: 0 auto;
+      max-width: 100%;
+      margin: 0 auto; /*0 top/bottom auto left/right */
       padding: 20px;
+      /* display: flex; */
+      /* flex-direction: row; */
     }
 
     .item-page__title {
       text-align: center;
       color: #563d7c;
+    }
+
+    select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 1em;
+      transition: border-color 0.3s ease;
+      background-color: white; /* Ensure dropdown background is white */
+    }
+
+    .form {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 15px;
+      display: flex;
+      flex-direction: row;
+      gap: 15px;
+    }
+
+    .form {
+      display: flex;
+    }
+
+    .form__group {
+      display: flex;
+      flex-direction: row;
     }
 
     .item-page__table {
@@ -149,9 +182,10 @@ import { HttpClient } from '@angular/common/http';
       background-color: #dﬀ0d8;
       border-color: #d6e9c6;
     }
+    */
   `
 })
-export class ListItemComponent {
+export class ItemListComponent {
   items: any[] = [];
   categories: any[] = [];
   serverMessage: string | null = null;
@@ -161,7 +195,7 @@ export class ListItemComponent {
     category: ['', Validators.compose([Validators.required])]
   })
 
-  constructor(/*private gardenService: ItemService, */ private fb: FormBuilder) {
+  constructor(/*private itemService: ItemService, */ private fb: FormBuilder) {
     /*
     this.itemService.getItems().subscribe({
       next: (items: Item[]) => {

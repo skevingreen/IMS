@@ -2,18 +2,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 let inventoryItemSchema = new Schema({
-  /*
-  _id: String,
-  categoryId: Number,
-  supplierId: Number,
-  name: String,
-  description: String,
-  quantity: Number,
-  price: Number,
-  dateCreated: Date,
-  dateModified: Date
-  */
-
   _id: {
     type: String,
   },
