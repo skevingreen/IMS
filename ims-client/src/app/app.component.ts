@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, RouterLink],
   template: `
     <div class="container">
       <header>
@@ -12,9 +12,9 @@ import { RouterOutlet } from '@angular/router';
       </header>
       <nav>
         <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/suppliers">Suppliers</a></li>
-          <li><a href="/items">Items</a></li>
+          <li><a routerLink="/"><i class="fas fa-home"></i>Home</a></li>
+          <li><a routerLink="/suppliers"><i class="fas fa-truck"></i>Suppliers</a></li>
+          <li><a routerLink="/items"><i class="fas fa-box"></i>Items</a></li>
         </ul>
       </nav>
       <main>
@@ -28,6 +28,7 @@ import { RouterOutlet } from '@angular/router';
     </div>
   `,
   styles: `
+
     .container {
       display: flex;
       flex-direction: column;
@@ -84,6 +85,8 @@ import { RouterOutlet } from '@angular/router';
       background-color: #ffffff;
     }
 
+    /* this creates a card effect in the middle third of the page */
+    /*
     section {
       max-width: 900px;
       margin: 0 auto;
@@ -92,6 +95,7 @@ import { RouterOutlet } from '@angular/router';
       border-radius: 8px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
     }
+    */
 
     footer {
       background-color:rgb(112, 177, 247);

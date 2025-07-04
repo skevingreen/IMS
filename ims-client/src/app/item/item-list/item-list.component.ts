@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+//import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { ItemService } from '../item.service';
 import { Item } from '../item';
 import { Category } from '../../category/category';
@@ -9,28 +10,21 @@ import { Category } from '../../category/category';
 @Component({
   selector: 'app-item-list-component',
   standalone: true,
-  imports: [RouterLink, CommonModule, ReactiveFormsModule],
+  imports: [RouterLink, CommonModule, FormsModule],
   template: `
     <div class="item-page">
       <h1 class="item-page__title">Item List</h1>
 
-      <!-- form class="form" [formGroup]="itemListForm" (ngSubmit)="onSubmit()" -->
-        <div class="item-page__filter-container">
-          <select required class="item-page__filter" formControlName="category" id="category" name="category">
-            <option value="" disabled>Select Category</option>
-            @for(category of categories; track category) {
-              <option value="{{ category }}">{{ category }}</option>
-            }
-          </select>
+      <div class="item-page__filter-container">
+        <select [(ngModel)]="filterType" class="item-page__filter">
+          <option value="" disabled>Select Category</option>
+          @for(category of categories; track category) {
+            <option value="{{ category }}">{{ category }}</option>
+          }
+        </select>
 
-          <input type="button" (click)="filterItems()" value="Filter Items" class="item-page__filter-button" />
-        </div>
-
-
-        <!-- div class="form__actions" -->
-          <!-- button class="button button--primary" type="submit">Filter Items</button -->
-        <!-- /div -->
-      <!-- /form -->
+        <input type="button" (click)="filterItems()" value="Filter Items" class="item-page__button" />
+      </div>
 
       <button class="item-page__button" routerLink="/items/add">Add Item</button>
 
@@ -38,7 +32,7 @@ import { Category } from '../../category/category';
         <table class="item-page__table">
           <thead class="item-page__table-head">
               <tr class="item-page__table-row">
-              <th class="item-page__table-header">Item ID</th>
+              <th class="item-page__table-header">Item Id</th>
               <th class="item-page__table-header">Category Id</th>
               <th class="item-page__table-header">Supplier Id</th>
               <th class="item-page__table-header">Name</th>
@@ -75,7 +69,6 @@ import { Category } from '../../category/category';
     </div>
   `,
   styles: `
-
     .item-page {
       max-width: 80%;
       margin: 0 auto;
@@ -84,7 +77,7 @@ import { Category } from '../../category/category';
 
     .item-page__title {
       text-align: center;
-      color: #563d7c;
+      color:rgb(112, 177, 247);
     }
 
     .item-page__table {
@@ -126,20 +119,6 @@ import { Category } from '../../category/category';
       color: #6c757d;
     }
 
-    .item-page__button {
-      background-color: #563d7c;
-      color: #ﬀf;
-      border: none;
-      padding: 10px 20px;
-      text-align: center;
-      text-decoration: none;
-      display: inline-block;
-      margin: 10px 2px;
-      cursor: pointer;
-      border-radius: 5px
-      transition: background-color 0.3s;
-    }
-
     .item-page__button:hover {
       background-color: #6c757d;
     }
@@ -170,49 +149,50 @@ import { Category } from '../../category/category';
       border-color: #d6e9c6;
     }
 
-    /*
-    select {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      font-size: 1em;
-      transition: border-color 0.3s ease;
-      background-color: white;
+    .item-page__filter-container {
+      display: ﬂex;
+      align-items: center;
+      margin-bottom: 1rem;
     }
 
-    .form {
-      background-color: white;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      padding: 15px;
-      display: flex;
-      flex-direction: row;
-      gap: 15px;
+    .item-page__filter {
+      flex: 1;
+      padding: 0.5rem;
+      margin-right: 0.5rem;
     }
 
-    .form {
-      display: flex;
+    .item-page__button {
+      background-color:rgb(112, 177, 247);
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      margin: 10px 2px;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: background-color 0.3s;
     }
 
-    .form__group {
-      display: flex;
-      flex-direction: row;
+    .item-page__filter-button:hover {
+      background-color: #6c757d;
     }
-    */
+
+    .item-page__highlight-info { text-align: center;
+      color: #6c757d;
+      margin-bottom: 1rem;
+    }
   `
 })
 export class ListItemComponent {
   items: Item[] = [];
   categories: Category[] = [];
+  filterType: string  = '';
   serverMessage: string | null = null;
   serverMessageType: 'success' | 'error' | null = null;
 
-  itemListForm = this.fb.group({
-    category: ['', Validators.compose([Validators.required])]
-  })
-
-  constructor(private itemService: ItemService, private fb: FormBuilder) {
+  constructor(private itemService: ItemService) {
     this.itemService.getItems().subscribe({
       next: (items: Item[]) => {
         this.items = items;
