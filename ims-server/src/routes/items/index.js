@@ -1,13 +1,20 @@
+/**
+ * Authors: Dua Hasan, Scott Green
+ * Date: 4 July 2025
+ * File: index.js
+ * Description: Routing for the items APIs.
+ */
+
 const express = require('express');
-//const Ajv = require('ajv');
-//const createError = require('http-errors');
+const Ajv = require('ajv');
+const createError = require('http-errors');
 const router = express.Router();
 const { inventoryItem } = require('../../models/inventoryItem');
-//const { addItemSchema /*, updateGardenSchema*/ } = require('../../schemas');
+const { addItemSchema /*, updateGardenSchema*/ } = require('../../schemas');
 
-//const ajv = new Ajv();
-//const validateAddGarden = ajv.compile(addItemSchema);
-// const validateUpdateGarden = ajv.compile(updateGardenSchema);
+const ajv = new Ajv();
+const validateAddItem = ajv.compile(addItemSchema);
+const validateUpdateItem = ajv.compile(updateItemSchema);
 
 // TODO: Implement Unit Tests
 router.get('/', async (req, res, next) => {
@@ -22,6 +29,7 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+// TODO: Finish implementing /items POST (add validation, etc.)
 router.post('/', async (req, res, next) => {
   try {
     //const items = await inventoryItem.find({});

@@ -1,3 +1,10 @@
+/**
+ * Authors: Dua Hasan, Scott Green
+ * Date: 4 July 2025
+ * File: category.js
+ * Description: Mongoose model for category documents.
+ */
+
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 

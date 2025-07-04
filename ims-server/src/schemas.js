@@ -1,3 +1,10 @@
+/**
+ * Authors: Dua Hasan, Scott Green
+ * Date: 4 July 2025
+ * File: schemas.js
+ * Description: Schema for database operations.
+ */
+
 const addItemSchema = {
   type: 'object',
   properties: {
