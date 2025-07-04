@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ListItemComponent } from './item-list.component';
+import { ItemListComponent } from './item-list.component';
 
-describe('ListItemComponent', () => {
-  let component: ListItemComponent;
-  let fixture: ComponentFixture<ListItemComponent>;
+describe('ItemListComponent', () => {
+  let component: ItemListComponent;
+  let fixture: ComponentFixture<ItemListComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ListItemComponent]
+      imports: [ItemListComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(ListItemComponent);
+    fixture = TestBed.createComponent(ItemListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -20,4 +20,6 @@ describe('ListItemComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  //TODO: Implement Unit Tests
 });

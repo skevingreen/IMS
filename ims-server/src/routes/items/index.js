@@ -9,6 +9,7 @@ const { inventoryItem } = require('../../models/inventoryItem');
 //const validateAddGarden = ajv.compile(addItemSchema);
 // const validateUpdateGarden = ajv.compile(updateGardenSchema);
 
+// TODO: Implement Unit Tests
 router.get('/', async (req, res, next) => {
   try {
     const items = await inventoryItem.find({});
@@ -24,12 +25,13 @@ router.get('/', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
   try {
     //const items = await inventoryItem.find({});
+    const items = [];
 
     //console.log("items: " + items);
     console.log("post /items not yet implemented");
     res.send(items);
   } catch (err) {
-    console.error(`Error while getting items: ${err}`);
+    console.error(`Error while creating item: ${err}`);
     next(err);
   }
 });

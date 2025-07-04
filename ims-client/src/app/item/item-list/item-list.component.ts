@@ -23,7 +23,7 @@ import { Category } from '../../category/category';
           }
         </select>
 
-        <input type="button" (click)="filterItems()" value="Filter Items" class="item-page__button" />
+        <input type="button" (click)="filterItems()" value="Filter Items" class="item-page__button" />  <!-- TODO: fix button float for smaller viewport -->
       </div>
 
       <!-- button class="item-page__button" routerLink="/items">Add Item</button -->
@@ -199,6 +199,8 @@ import { Category } from '../../category/category';
   `
 })
 export class ItemListComponent {
+  // TODO: Add comments
+  // TODO: Add validators
   items: Item[] = [];
   categories: Category[] = [];
   filterType: string  = '';
