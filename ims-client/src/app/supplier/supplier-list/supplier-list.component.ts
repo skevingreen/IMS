@@ -1,3 +1,10 @@
+/**
+ * Authors: Dua Hasan, Scott Green
+ * Date: 4 July 2025
+ * File: item.ts
+ * Description: Component to display and manipulate suppliers.
+ */
+
 import { Component } from '@angular/core';
 
 @Component({

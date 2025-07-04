@@ -1,3 +1,10 @@
+/**
+ * Authors: Richard Krasso, Dua Hasan, Scott Green
+ * Date: 4 July 2025
+ * File: app.component.spec.ts
+ * Description: Unit tests for app component.
+ */
+
 import { TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 
@@ -14,16 +21,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'ets-client' title`, () => {
+  it(`should have the 'ims-client' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('ets-client');
+    expect(app.title).toEqual('ims-client');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Welcome to the MEAN Stack Starter Project');
+    expect(compiled.querySelector('h1')?.textContent).toContain('Welcome to the Inventory System');
   });
 });

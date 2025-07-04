@@ -1,5 +1,11 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+/**
+ * Authors: Dua Hasan, Scott Green
+ * Date: 4 July 2025
+ * File: item.ts
+ * Description: Unit tests for supplier-list component.
+ */
 
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SupplierListComponent } from './supplier-list.component';
 
 describe('SupplierListComponent', () => {

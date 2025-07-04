@@ -1,3 +1,10 @@
+/**
+ * Authors: Dua Hasan, Scott Green
+ * Date: 4 July 2025
+ * File: home.component.ts
+ * Description: Component to display Home page content.
+ */
+
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
@@ -10,14 +17,18 @@ import { environment } from '../../environments/environment';
   template: `
     <div class="home-container">
       <h2>Welcome to the Inventory System</h2>
-      <p>The idea of the Inventory Management System was inspired by the need for businesses to manage their inventory efficiently.
+      <p>
+        The idea of the Inventory Management System was inspired by the need for businesses to manage their inventory efficiently.
         whether you are a small business owner looking to keep track of stack levels or a warehouse manager needing to organize inventory,
-        the Inventory management System is designed to cater your needs. </p>
+        the Inventory management System is designed to cater your needs.
+      </p>
 
+      <!--
       <div class="server-message-box" *ngIf="serverMessage">
         <strong>Server message:&nbsp;</strong>
         <span>{{ serverMessage }}</span>
       </div>
+      -->
     </div>
   `,
   styles: [`
@@ -51,11 +62,13 @@ export class HomeComponent {
   serverMessage: string = '';
 
   constructor(private http: HttpClient) {
+    /*
     setTimeout(() => {
       this.http.get(`${environment.apiBaseUrl}/api`).subscribe({
         next: (res: any) => this.serverMessage = res['message'],
         error: () => this.serverMessage = 'Error loading server message'
       });
     }, 2000);
+    */
   }
 }

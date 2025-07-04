@@ -1,3 +1,10 @@
+/**
+ * Authors: Richard Krasso, Dua Hasan, Scott Green
+ * Date: 4 July 2025
+ * File: app.component.spec.ts
+ * Description: Component to display shared content such as header, nav, footer.
+ */
+
 import { Component } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 

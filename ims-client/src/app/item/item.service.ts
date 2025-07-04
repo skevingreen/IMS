@@ -1,3 +1,10 @@
+/**
+ * Authors: Dua Hasan, Scott Green
+ * Date: 4 July 2025
+ * File: item.service.ts
+ * Description: Service for performing actions on Items.
+ */
+
 import { /*AddItemDTO, UpdateItemDTO,*/ Item } from './item';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
@@ -14,11 +21,11 @@ export class ItemService {
   }
 
   /*
-  getItem(gardenId: number) {
+  getItem(itemId: number) {
     return this.http.get<Item>(`${environment.apiBaseUrl}/api/items/${itemId}`);
   }
 
-  addGarden(garden: AddItemDTO) {
+  addItem(item: AddItemDTO) {
     return this.http.post<Item>(`${environment.apiBaseUrl}/api/items`, item);
   }
 
@@ -27,7 +34,7 @@ export class ItemService {
   }
   */
 
-  deleteGarden(gardenId: number) {
-    return this.http.delete(`${environment.apiBaseUrl}/api/gardens/${gardenId}`);
+  deleteItem(itemId: number) {
+    return this.http.delete(`${environment.apiBaseUrl}/api/gardens/${itemId}`);
   }
 }

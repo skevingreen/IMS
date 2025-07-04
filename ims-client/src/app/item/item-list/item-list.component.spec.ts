@@ -1,5 +1,11 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+/**
+ * Authors: Dua Hasan, Scott Green
+ * Date: 4 July 2025
+ * File: item-list.component.spec.ts
+ * Description: Unit tests for item-list component.
+ */
 
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ItemListComponent } from './item-list.component';
 
 describe('ItemListComponent', () => {
