@@ -17,7 +17,7 @@ import { Category } from '../../category/category';
 
       <div class="item-page__filter-container">
         <select [(ngModel)]="filterType" class="item-page__filter">
-          <option value="" disabled>Select Category</option>
+          <option value="" disabled>All</option>
           @for(category of categories; track category) {
             <option value="{{ category }}">{{ category }}</option>
           }
@@ -26,7 +26,8 @@ import { Category } from '../../category/category';
         <input type="button" (click)="filterItems()" value="Filter Items" class="item-page__button" />
       </div>
 
-      <button class="item-page__button" routerLink="/items/add">Add Item</button>
+      <!-- button class="item-page__button" routerLink="/items">Add Item</button -->
+      <input type="button" (click)="filterItems()" value="Add Items" class="item-page__button" />
 
       @if (items && items.length > 0) {
         <table class="item-page__table">
@@ -53,10 +54,11 @@ import { Category } from '../../category/category';
                 <td class="item-page__table-cell">{{ item.name }}</td>
                 <td class="item-page__table-cell">{{ item.description }}</td>
                 <td class="item-page__table-cell">{{ item.quantity }}</td>
-                <td class="item-page__table-cell">{{ item.price }}</td>
+                <td class="item-page__table-cell">{{ item.price }}</td> <!-- TODO: always show cents? -->
                 <td class="item-page__table-cell">{{ item.dateCreated }}</td>
                 <td class="item-page__table-cell item-page table-cell--functions">
-                  <a routerLink="/item/{{item._id}}" class="item-page__icon- link"><i class="fas fa-edit"></i></a>
+                  <!-- a routerLink="/item/{{item._id}}" class="item-page__icon- link"><i class="fas fa-edit"></i></a -->
+                  <a (click)="deleteItem(item._id)" class="item-page__icon-link"><i class="fas fa-edit"></i></a> <!-- TODO: css to center icons? -->
                   <a (click)="deleteItem(item._id)" class="item-page__icon-link"><i class="fas fa-trash-alt"></i></a>
                 </td>
               </tr>
@@ -69,9 +71,17 @@ import { Category } from '../../category/category';
     </div>
   `,
   styles: `
+    /* TODO: make all hover colors same */
+    select {
+      width: 90%;
+      border: 1px solid rgb(112, 177, 247);
+      color: rgb(112, 177, 247);
+      background-color: #FFF;
+    }
+
     .item-page {
       max-width: 80%;
-      margin: 0 auto;
+      margin: 0 auto; /* top/bottom, right/left */
       padding: 20px;
     }
 
@@ -81,22 +91,24 @@ import { Category } from '../../category/category';
     }
 
     .item-page__table {
-      width: 100%;
+      margin-top: 3rem;
+      width: 98%;
       border-collapse: collapse;
     }
 
     .item-page__table-header {
-      background-color: #FFE484;
-      color: #000;
-      border: 1px solid black;
+      background-color: rgb(112, 177, 247);
+      color: #FFF;
+      border: 1px solid white;
       padding: 5px;
       text-align: left;
     }
 
     .item-page__table-cell {
-      border: 1px solid black;
+      border: 1px solid rgb(112, 177, 247);
       padding: 5px;
       text-align: left;
+      color: rgb(112, 177, 247);
     }
 
     .item-page__table-cell--functions {
@@ -105,7 +117,8 @@ import { Category } from '../../category/category';
 
     .item-page__icon-link {
       cursor: pointer;
-      color: #6c757d;
+      /*color: #6c757d;*/
+      color: rgb(112, 177, 247);
       text-decoration: none;
       margin: 0 5px;
     }
@@ -152,7 +165,7 @@ import { Category } from '../../category/category';
     .item-page__filter-container {
       display: ﬂex;
       align-items: center;
-      margin-bottom: 1rem;
+      margin-bottom: 0rem;
     }
 
     .item-page__filter {
@@ -185,7 +198,7 @@ import { Category } from '../../category/category';
     }
   `
 })
-export class ListItemComponent {
+export class ItemListComponent {
   items: Item[] = [];
   categories: Category[] = [];
   filterType: string  = '';
@@ -205,9 +218,11 @@ export class ListItemComponent {
   }
 
   deleteItem(itemId: string) {
+    /*
     if (!confirm('Are you sure you want to delete this item?')) {
       return;
     }
+    */
 
     alert("Method has not yet been implemented.\nTry again later.");
 

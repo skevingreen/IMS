@@ -40,10 +40,10 @@ let inventoryItemSchema = new Schema({
   dateModified: {
     type: Date
   }
-});
+}, {collection: 'inventoryItems'});
 
 inventoryItemSchema.pre('save', function(next) {  // pre db hook
-  if (!this.isNew) {  // when record saved, date modified is updated
+  if (!this.isNew) {                              // when record saved, date modified is updated
     this.dateModified = new Date();
   }
   next();
