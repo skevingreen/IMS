@@ -16,6 +16,7 @@ import { environment } from '../../environments/environment';
 export class ItemService {
   constructor(private http: HttpClient) { }
 
+  // Retrieve all items from the database.
   getItems() {
     return this.http.get<Item[]>(`${environment.apiBaseUrl}/api/items`);
   }

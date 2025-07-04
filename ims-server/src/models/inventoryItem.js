@@ -24,7 +24,8 @@ let inventoryItemSchema = new Schema({
     type: String,
     required: [true, 'Item name is required'],
     minlength: [1, 'Item name must be at least 1 character'],
-    maxlength: [100, 'Item name cannot exceed 100 characters']
+    maxlength: [100, 'Item name cannot exceed 100 characters'],
+    unique: true
   },
   description: {
     type: String,
@@ -34,11 +35,23 @@ let inventoryItemSchema = new Schema({
   },
   quantity: {
     type: Number,
-    required: [true, 'Item quantity is required']
+    required: [true, 'Item quantity is required'],
+    validate: {
+      validator: function(v) {
+        return v > 0;
+      },
+      message: props => `Negative quantity is not allowed: ${props.value}`
+    }
   },
   price: {
-    type: Number,
-    required: [true, 'Item price is required']
+    type: Float32Array,
+    required: [true, 'Item price is required'],
+    validate: {
+      validator: function(v) {
+        return v > 0;
+      },
+      message: props => `Negative price is not allowed: ${props.value}`
+    }
   },
   dateCreated: {
     type: Date,

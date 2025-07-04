@@ -8,7 +8,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
-//import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
 import { ItemService } from '../item.service';
 import { Item } from '../item';
@@ -22,20 +21,25 @@ import { Category } from '../../category/category';
     <div class="item-page">
       <h1 class="item-page__title">Item List</h1>
 
+      <!-- Group the dropdown and button for filtering by category together -->
       <div class="item-page__filter-container">
-        <select [(ngModel)]="filterType" class="item-page__filter">
+        <select [(ngModel)]="filterType" class="item-page__filter" required>
+          <!-- Show "All" categories selected by default. -->
           <option value="" disabled>All</option>
+          <!-- Take the list of categories returned from the database and populate the filter dropdown. -->
           @for(category of categories; track category) {
             <option value="{{ category }}">{{ category }}</option>
           }
         </select>
 
-        <input type="button" (click)="filterItems()" value="Filter Items" class="item-page__button" />  <!-- TODO: fix button float for smaller viewport -->
+        <!-- Update the list of items displayed based on the selected category. -->
+        <input type="button" (click)="filterItems()" value="Filter Items" class="item-page__button" />
       </div>
 
-      <!-- button class="item-page__button" routerLink="/items">Add Item</button -->
+      <!-- Open the add items component. -->
       <input type="button" (click)="filterItems()" value="Add Items" class="item-page__button" />
 
+      <!-- Create the table to display results of items query. -->
       @if (items && items.length > 0) {
         <table class="item-page__table">
           <thead class="item-page__table-head">
@@ -61,11 +65,11 @@ import { Category } from '../../category/category';
                 <td class="item-page__table-cell">{{ item.name }}</td>
                 <td class="item-page__table-cell">{{ item.description }}</td>
                 <td class="item-page__table-cell">{{ item.quantity }}</td>
-                <td class="item-page__table-cell">{{ item.price }}</td> <!-- TODO: always show cents? -->
+                <td class="item-page__table-cell">{{ item.price }}</td>
                 <td class="item-page__table-cell">{{ item.dateCreated }}</td>
-                <td class="item-page__table-cell item-page table-cell--functions">
+                <td class="item-page__table-cell item-page__table-cell--functions">
                   <!-- a routerLink="/item/{{item._id}}" class="item-page__icon- link"><i class="fas fa-edit"></i></a -->
-                  <a (click)="deleteItem(item._id)" class="item-page__icon-link"><i class="fas fa-edit"></i></a> <!-- TODO: css to center icons? -->
+                  <a (click)="deleteItem(item._id)" class="item-page__icon-link"><i class="fas fa-edit"></i></a>
                   <a (click)="deleteItem(item._id)" class="item-page__icon-link"><i class="fas fa-trash-alt"></i></a>
                 </td>
               </tr>
@@ -78,7 +82,7 @@ import { Category } from '../../category/category';
     </div>
   `,
   styles: `
-    /* TODO: make all hover colors same */
+    /* Styling for dropdown. */
     select {
       width: 90%;
       border: 1px solid rgb(112, 177, 247);
@@ -86,6 +90,7 @@ import { Category } from '../../category/category';
       background-color: #FFF;
     }
 
+    /* Main container styling. */
     .item-page {
       max-width: 80%;
       margin: 0 auto; /* top/bottom, right/left */
@@ -97,6 +102,7 @@ import { Category } from '../../category/category';
       color:rgb(112, 177, 247);
     }
 
+    /* Table styling. */
     .item-page__table {
       margin-top: 3rem;
       width: 98%;
@@ -124,14 +130,13 @@ import { Category } from '../../category/category';
 
     .item-page__icon-link {
       cursor: pointer;
-      /*color: #6c757d;*/
       color: rgb(112, 177, 247);
       text-decoration: none;
       margin: 0 5px;
     }
 
     .item-page__icon-link:hover {
-      color: #000;
+      color: rgb(28, 11, 153);
     }
 
     .item-page__no-items {
@@ -139,10 +144,7 @@ import { Category } from '../../category/category';
       color: #6c757d;
     }
 
-    .item-page__button:hover {
-      background-color: #6c757d;
-    }
-
+    /* Server message styling. */
     .message-alert {
       padding: 15px;
       margin-bottom: 20px;
@@ -169,6 +171,7 @@ import { Category } from '../../category/category';
       border-color: #d6e9c6;
     }
 
+    /* Item styling. */
     .item-page__filter-container {
       display: ﬂex;
       align-items: center;
@@ -195,8 +198,8 @@ import { Category } from '../../category/category';
       transition: background-color 0.3s;
     }
 
-    .item-page__filter-button:hover {
-      background-color: #6c757d;
+    .item-page__button:hover {
+      background-color: rgb(28, 11, 153);
     }
 
     .item-page__highlight-info { text-align: center;
@@ -206,15 +209,14 @@ import { Category } from '../../category/category';
   `
 })
 export class ItemListComponent {
-  // TODO: Add comments
-  // TODO: Add validators
-  items: Item[] = [];
-  categories: Category[] = [];
-  filterType: string  = '';
+  items: Item[] = [];           // Array to hold all returned items.
+  categories: Category[] = [];  // Array to hold all returned categories.
+  filterType: string  = '';     // Default filter setting.
   serverMessage: string | null = null;
   serverMessageType: 'success' | 'error' | null = null;
 
   constructor(private itemService: ItemService) {
+    // Retrieve a list of all items from the database
     this.itemService.getItems().subscribe({
       next: (items: Item[]) => {
         this.items = items;

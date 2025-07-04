@@ -20,7 +20,8 @@ let inventoryItemSchema = new Schema({
     type: String,
     required: [true, 'Category name is required'],
     minlength: [1, 'Item name must be at least 1 character'],
-    maxlength: [100, 'Item name cannot exceed 100 characters']
+    maxlength: [100, 'Item name cannot exceed 100 characters'],
+    unique: true
   },
   description: {
     type: String,
@@ -37,8 +38,8 @@ let inventoryItemSchema = new Schema({
   }
 });
 
-categorySchema.pre('save', function(next) {  // pre db hook
-  if (!this.isNew) {  // when record saved, date modified is updated
+categorySchema.pre('save', function(next) { // pre db hook
+  if (!this.isNew) {                        // when record saved, date modified is updated
     this.dateModified = new Date();
   }
   next();
