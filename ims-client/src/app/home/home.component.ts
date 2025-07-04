@@ -15,7 +15,7 @@ import { environment } from '../../environments/environment';
         the Inventory management System is designed to cater your needs. </p>
 
       <div class="server-message-box" *ngIf="serverMessage">
-        <strong>Server message:</strong>
+        <strong>Server message:&nbsp;</strong>
         <span>{{ serverMessage }}</span>
       </div>
     </div>
@@ -28,13 +28,13 @@ import { environment } from '../../environments/environment';
       background-color: #ffffff;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       border-radius: 12px;
-      text-align: center;
     }
 
     h2 {
       font-size: 20px;
       margin-bottom: 16px;
       color: rgb(112, 177, 247);
+      text-align: center;
     }
 
     .server-message-box {

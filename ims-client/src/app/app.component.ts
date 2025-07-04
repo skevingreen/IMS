@@ -12,9 +12,9 @@ import { RouterLink, RouterOutlet } from '@angular/router';
       </header>
       <nav>
         <ul>
-          <li><a routerLink="/"><i class="fas fa-home"></i>Home</a></li>
-          <li><a routerLink="/suppliers"><i class="fas fa-truck"></i>Suppliers</a></li>
-          <li><a routerLink="/items"><i class="fas fa-box"></i>Items</a></li>
+          <li><a routerLink="/"><i class="fas fa-home"></i>&nbsp;Home</a></li>
+          <li><a routerLink="/suppliers"><i class="fas fa-truck"></i>&nbsp;Suppliers</a></li>
+          <li><a routerLink="/items"><i class="fas fa-box"></i>&nbsp;Items</a></li>
         </ul>
       </nav>
       <main>
