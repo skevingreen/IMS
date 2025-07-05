@@ -44,7 +44,7 @@ let inventoryItemSchema = new Schema({
     }
   },
   price: {
-    type: Float32Array,
+    type: Number,
     required: [true, 'Item price is required'],
     validate: {
       validator: function(v) {

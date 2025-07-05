@@ -8,7 +8,7 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-let inventoryItemSchema = new Schema({
+let categorySchema = new Schema({
   _id: {
     type: String,
   },
@@ -19,8 +19,8 @@ let inventoryItemSchema = new Schema({
   categoryName: {
     type: String,
     required: [true, 'Category name is required'],
-    minlength: [1, 'Item name must be at least 1 character'],
-    maxlength: [100, 'Item name cannot exceed 100 characters'],
+    minlength: [1, 'Category name must be at least 1 character'],
+    maxlength: [100, 'Category name cannot exceed 100 characters'],
     unique: true
   },
   description: {
@@ -36,7 +36,7 @@ let inventoryItemSchema = new Schema({
   dateModified: {
     type: Date
   }
-});
+}, {collection: 'Categories'});
 
 categorySchema.pre('save', function(next) { // pre db hook
   if (!this.isNew) {                        // when record saved, date modified is updated
@@ -46,5 +46,5 @@ categorySchema.pre('save', function(next) { // pre db hook
 })
 
 module.exports = {
-  categoryItem: mongoose.model('categoryItem', categorySchema)
+  Category: mongoose.model('Category', categorySchema)
 }

@@ -14,9 +14,8 @@ const { addItemSchema /*, updateGardenSchema*/ } = require('../../schemas');
 
 const ajv = new Ajv();
 const validateAddItem = ajv.compile(addItemSchema);
-const validateUpdateItem = ajv.compile(updateItemSchema);
+//const validateUpdateItem = ajv.compile(updateItemSchema);
 
-// TODO: Implement Unit Tests
 router.get('/', async (req, res, next) => {
   try {
     const items = await inventoryItem.find({});
@@ -25,21 +24,6 @@ router.get('/', async (req, res, next) => {
     res.send(items);
   } catch (err) {
     console.error(`Error while getting items: ${err}`);
-    next(err);
-  }
-});
-
-// TODO: Finish implementing /items POST (add validation, etc.)
-router.post('/', async (req, res, next) => {
-  try {
-    //const items = await inventoryItem.find({});
-    const items = [];
-
-    //console.log("items: " + items);
-    console.log("post /items not yet implemented");
-    res.send(items);
-  } catch (err) {
-    console.error(`Error while creating item: ${err}`);
     next(err);
   }
 });
