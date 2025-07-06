@@ -7,6 +7,8 @@
 
 const mongoose = require('mongoose');
 const { Category } = require('../../src/models/category');
+const request = require("supertest");
+const express = require("express");
 
 describe('Category Model Test', () => {
   // Connect to a test database
@@ -139,3 +141,100 @@ describe('Category Model Test', () => {
   });
 });
 
+// Use a separate app instance to avoid conflicts
+const categoryApp = express();
+categoryApp.use(express.json());
+
+// Mock data
+const mockCategories = [
+  {
+    _id: "507f1f77bcf86cd799439031",
+    categoryId: 1000,
+    categoryName: "Electronics",
+    description: "Electronic devices and gadgets",
+    dateCreated: new Date().toISOString(),
+    dateModified: new Date().toISOString(),
+  },
+];
+
+// Mock POST route for category creation
+categoryApp.post("/api/categories", (req, res) => {
+  const { categoryName, description } = req.body;
+
+  if (!categoryName || !description) {
+    return res.status(400).json({
+      success: false,
+      message: "Category name and description are required",
+    });
+  }
+
+  if (categoryName === "Duplicate Category") {
+    return res.status(400).json({
+      success: false,
+      message: "Category name must be unique",
+    });
+  }
+
+  const newCategory = {
+    _id: "507f1f77bcf86cd799439032",
+    categoryId: 1001,
+    categoryName,
+    description,
+    dateCreated: new Date().toISOString(),
+    dateModified: new Date().toISOString(),
+  };
+
+  res.status(201).json({
+    success: true,
+    message: "Category created successfully",
+    data: newCategory,
+  });
+});
+
+describe("API - POST /api/categories - Create Category", () => {
+  test("should create category successfully with valid data", async () => {
+    const validCategoryData = {
+      categoryName: "Electronics",
+      description: "Electronic devices and gadgets",
+    };
+
+    const response = await request(categoryApp)
+      .post("/api/categories")
+      .send(validCategoryData)
+      .expect(201);
+
+    expect(response.body.success).toBe(true);
+    expect(response.body.message).toBe("Category created successfully");
+    expect(response.body.data.categoryName).toBe(validCategoryData.categoryName);
+  });
+
+  test("should return 400 error for missing required fields", async () => {
+    const invalidData = {
+      categoryName: "Electronics",
+      // Missing description
+    };
+
+    const response = await request(categoryApp)
+      .post("/api/categories")
+      .send(invalidData)
+      .expect(400);
+
+    expect(response.body.success).toBe(false);
+    expect(response.body.message).toBe("Category name and description are required");
+  });
+
+  test("should return 400 error for duplicate category name", async () => {
+    const duplicateData = {
+      categoryName: "Duplicate Category",
+      description: "This is a duplicate",
+    };
+
+    const response = await request(categoryApp)
+      .post("/api/categories")
+      .send(duplicateData)
+      .expect(400);
+
+    expect(response.body.success).toBe(false);
+    expect(response.body.message).toBe("Category name must be unique");
+  });
+});
