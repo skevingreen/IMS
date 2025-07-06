@@ -9,7 +9,7 @@ const express = require('express');
 const Ajv = require('ajv');
 const createError = require('http-errors');
 const router = express.Router();
-const { inventoryItem } = require('../../models/inventoryItem');
+const { Category } = require('../../models/category');
 //const { addCategorySchema /*, updateCategorySchema*/ } = require('../../schemas');
 
 //const ajv = new Ajv();
@@ -18,10 +18,10 @@ const { inventoryItem } = require('../../models/inventoryItem');
 
 router.get('/', async (req, res, next) => {
   try {
-    const categories = await category.find({});
+    const categories = await Category.find({});
 
-    console.log("categories: " + categories);
-    res.send(items);
+    //console.log("categories: " + categories);
+    res.send(categories);
   } catch (err) {
     console.error(`Error while getting categories: ${err}`);
     next(err);

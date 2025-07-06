@@ -5,7 +5,7 @@
  * Description: Service for performing actions on Items.
  */
 
-import { /*AddItemDTO, UpdateItemDTO,*/ Item } from './item';
+import { AddItemDTO, Item } from './item';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
@@ -21,21 +21,15 @@ export class ItemService {
     return this.http.get<Item[]>(`${environment.apiBaseUrl}/api/items`);
   }
 
-  /*
-  getItem(itemId: number) {
-    return this.http.get<Item>(`${environment.apiBaseUrl}/api/items/${itemId}`);
+  getItem(inventoryItemId: string) {
+    return this.http.get<Item>(`${environment.apiBaseUrl}/api/items/${inventoryItemId}`);
   }
 
   addItem(item: AddItemDTO) {
     return this.http.post<Item>(`${environment.apiBaseUrl}/api/items`, item);
   }
 
-  updateItem(item: UpdateItemDTO, itemId: number) {
-    return this.http.patch<Item>(`${environment.apiBaseUrl}/api/items/${itemId}`, item);
-  }
-  */
-
-  deleteItem(itemId: number) {
-    return this.http.delete(`${environment.apiBaseUrl}/api/gardens/${itemId}`);
+  deleteItem(inventoryItemId: string) {
+    return this.http.delete(`${environment.apiBaseUrl}/api/gardens/${inventoryItemId}`);
   }
 }

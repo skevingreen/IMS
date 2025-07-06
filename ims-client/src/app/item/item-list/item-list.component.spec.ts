@@ -36,15 +36,33 @@ describe('ItemListComponent', () => {
 
   it('should display records in the DOM', () => {
     const mockItems: Item[] = [
-      { _id: '12345', categoryId: 1, supplierId: 3, name: 'Item 1', description: 'Description 1', quantity: 11, price: 9.99, dateCreated: '2024-09-04T21:39:36.605Z' },
-      { _id: '67890', categoryId: 2, supplierId: 4, name: 'Item 2', description: 'Description 2', quantity: 14, price: 19.99, dateCreated: '2024-09-05T25:35:56.605Z' }
+      { _id: '12345',
+        categoryId: 1,
+        supplierId: 3,
+        name: 'Item 1',
+        description: 'Description 1',
+        quantity: 11,
+        price: 9.99,
+        dateCreated: '2024-09-04T21:39:36.605Z',
+        dateModified: '2024-09-04T21:39:36.605Z'
+      },
+      { _id: '67890',
+        categoryId: 2,
+        supplierId: 4,
+        name: 'Item 2',
+        description: 'Description 2',
+        quantity: 14,
+        price: 19.99,
+        dateCreated: '2024-09-05T25:35:56.605Z',
+        dateModified: '2024-09-04T21:39:36.605Z'
+      }
     ];
 
     component.items = mockItems;
     fixture.detectChanges();                  // Trigger change detection
 
     const itemRows = fixture.debugElement.queryAll(By.css('.item-page__table-body .item-page__table-row'));
-    expect(itemRows.length).toBeGreaterThan(0); // Check that there are garden rows in the DOM
+    expect(itemRows.length).toBeGreaterThan(0); // Check that there are item rows in the DOM
   });
 
   it('should handle error when fetching items', () => {

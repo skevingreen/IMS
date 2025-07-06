@@ -20,11 +20,35 @@ router.get('/', async (req, res, next) => {
   try {
     const items = await inventoryItem.find({});
 
-    console.log("items: " + items);
+    //console.log("items: " + items);
     res.send(items);
   } catch (err) {
     console.error(`Error while getting items: ${err}`);
     next(err);
+  }
+});
+
+router.post('/', async (req, res, next) => {
+  try {
+    const valid = validateAddItem(req.body);
+
+    if (!valid) {
+      return next(createError(400, ajv.errorsText(validateAddItem.errors)));
+    }
+
+    const payload = {
+      ...req.body
+    }
+
+    const item = new inventoryItem(payload);
+
+    await item.save();
+
+    res.send({
+      message: 'Item created successfully', id: item._id
+    });
+  } catch (err) {
+    console.error(`Error while creating item: ${err}`); next(err);
   }
 });
 

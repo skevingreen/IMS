@@ -37,7 +37,7 @@ import { Category } from '../../category/category';
       </div>
 
       <!-- Open the add items component. -->
-      <input type="button" (click)="filterItems()" value="Add Items" class="item-page__button" />
+      <input type="button" routerLink="/items/add" value="Add Items" class="item-page__button" />
 
       <!-- Create the table to display results of items query. -->
       @if (items && items.length > 0) {
@@ -229,40 +229,8 @@ export class ItemListComponent {
   }
 
   deleteItem(itemId: string) {
-    /*
-    if (!confirm('Are you sure you want to delete this item?')) {
-      return;
-    }
-    */
-
     alert("Method has not yet been implemented.\nTry again later.");
-
-    /*
-    this.itemService.deleteItem(itemId).subscribe({
-      next: () => {
-        console.log(`Item with ID ${itemId} deleted successfully`);
-        this.items = this.items.filter(i => i.itemId !== itemId);
-        this.serverMessageType = 'success';
-        this.serverMessage = `Item with ID ${itemId} deleted successfully`;
-        this.clearMessageAfterDelay();
-      }, error: (err: any) => {
-        console.error(`Error occurred while deleting item with ID ${itemId}: ${err}`);
-        this.serverMessageType = 'error';
-        this.serverMessage = `Error occurred while deleting item with ID ${itemId}. Please try again later.`;
-        this.clearMessageAfterDelay();
-      }
-    });
-    */
   }
-
-  /*
-  private clearMessageAfterDelay() {
-    setTimeout(() => {
-      this.serverMessage = null;
-      this.serverMessageType = null;
-    }, 3000)
-  }
-  */
 
   filterItems() {
     alert("Method has not yet been implemented.\nTry again later.");

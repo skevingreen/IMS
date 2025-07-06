@@ -9,9 +9,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 let inventoryItemSchema = new Schema({
-  _id: {
-    type: String,
-  },
   categoryId: {
     type: Number,
     required: [true, 'Item categoryId is required'] // validations

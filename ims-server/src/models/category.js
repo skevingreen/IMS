@@ -18,9 +18,9 @@ let categorySchema = new Schema({
   },
   categoryName: {
     type: String,
-    required: [true, 'Category name is required'],
-    minlength: [1, 'Category name must be at least 1 character'],
-    maxlength: [100, 'Category name cannot exceed 100 characters'],
+    required: [true, 'Category categoryName is required'],
+    minlength: [1, 'Category categoryName must be at least 1 character'],
+    maxlength: [100, 'Category categoryName cannot exceed 100 characters'],
     unique: true
   },
   description: {

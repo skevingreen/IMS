@@ -9,6 +9,8 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { ItemListComponent } from './item/item-list/item-list.component';
 import { SupplierListComponent } from './supplier/supplier-list/supplier-list.component';
+import { ItemDetailsComponent } from './item/item-details/item-details.component';
+import { ItemAddComponent } from './item/item-add/item-add.component';
 
 export const routes: Routes = [
   {
@@ -18,6 +20,14 @@ export const routes: Routes = [
   {
     path: 'items',
     component: ItemListComponent
+  },
+  {
+    path: 'items/add',
+    component: ItemAddComponent
+  },
+  {
+    path: 'items/:inventoryItemsId',
+    component: ItemDetailsComponent
   },
   {
     path: 'suppliers',

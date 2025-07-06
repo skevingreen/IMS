@@ -12,11 +12,8 @@ export interface Item {
   description: string;
   quantity: number;
   price: number;
-  dateCreated?: string;
-  dateModified?: string;
+  dateCreated: string;
+  dateModified: string;
 }
 
-/*
-export type UpdateGardenDTO = Omit<Item, '_id' | 'dateCreated' | 'dateModified'>;
-export type AddGardenDTO = Omit<Item, '_id' | 'dateModified'>;
-*/
+export type AddItemDTO = Omit<Item, '_id'>;
