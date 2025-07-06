@@ -803,6 +803,7 @@ export class InventoryComponent implements OnInit {
   items: InventoryItem[] = [];
   categories: Category[] = [];
   suppliers: Supplier[] = [];
+
   stats: DashboardStats = {
     totalItems: 0,
     totalSuppliers: 0,
@@ -821,7 +822,6 @@ export class InventoryComponent implements OnInit {
     quantity: 0,
     price: 0,
   };
- 
 
   constructor(private apiService: ApiService) {}
 
@@ -835,6 +835,22 @@ export class InventoryComponent implements OnInit {
       next: (items) => (this.items = items),
       error: (error) => console.error('Error loading items:', error),
     });
+
+    this.apiService.getCategories().subscribe({
+      next: (categories) => (this.categories = categories),
+      error: (error) => console.error('Error loading categories:', error),
+    });
+
+    this.apiService.getSuppliers().subscribe({
+      next: (suppliers) => (this.suppliers = suppliers),
+      error: (error) => console.error('Error loading suppliers:', error),
+    });
+
+    this.apiService.getDashboardStats().subscribe({
+      next: (stats) => (this.stats = stats),
+      error: (error) => console.error('Error loading stats:', error),
+    });
+  }
 
   createItem(): void {
     this.apiService.createInventoryItem(this.newItem).subscribe({
@@ -850,8 +866,6 @@ export class InventoryComponent implements OnInit {
     });
   }
 
- 
-
   private resetItemForm(): void {
     this.newItem = {
       name: '',
@@ -863,6 +877,13 @@ export class InventoryComponent implements OnInit {
     };
   }
 
-
-
- 
+  private closeModal(modalId: string): void {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+      const modalInstance = bootstrap.Modal.getInstance(modal);
+      if (modalInstance) {
+        modalInstance.hide();
+      }
+    }
+  }
+}

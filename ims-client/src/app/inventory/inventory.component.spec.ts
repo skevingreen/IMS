@@ -3,7 +3,6 @@ import { InventoryComponent } from './inventory.component';
 import { ApiService } from '../services/api.service';
 import { of, throwError } from 'rxjs';
 import { FormsModule } from '@angular/forms';
-import { By } from '@angular/platform-browser';
 
 describe('InventoryComponent', () => {
   let component: InventoryComponent;
@@ -29,12 +28,15 @@ describe('InventoryComponent', () => {
   // Test 1: Should call createInventoryItem with form data
   it('should call ApiService.createInventoryItem with new item data', () => {
     const testItem = {
+      _id: '123abc456eebeedeebee7890',
       name: 'Test Item',
       description: 'Description',
       categoryId: 1,
       supplierId: 1,
       quantity: 10,
       price: 99.99,
+      dateCreated: '2021-01-01T01:01:01.000Z',
+      dateModified: '2023-03-03T01:03:03.000Z'
     };
 
     component.newItem = { ...testItem };
@@ -53,12 +55,15 @@ describe('InventoryComponent', () => {
     spyOn(component, 'loadData');
 
     const testItem = {
+      _id: '123abc456eebeedeebee7890',
       name: 'Test Item',
       description: 'Description',
       categoryId: 1,
       supplierId: 1,
       quantity: 10,
       price: 99.99,
+      dateCreated: '2021-01-01T01:01:01.000Z',
+      dateModified: '2023-03-03T01:03:03.000Z'
     };
 
     mockApiService.createInventoryItem.and.returnValue(of(testItem));

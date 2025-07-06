@@ -10,8 +10,6 @@ const router = express.Router();
 const InventoryItem = require("../models/inventory-item");
 const Category = require("../models/category");
 
-
-
 // POST /api/inventory - Create new inventory item
 router.post("/", async (req, res, next) => {
   try {
@@ -64,6 +62,5 @@ router.post("/", async (req, res, next) => {
     next(error);
   }
 });
-
 
 module.exports = router;

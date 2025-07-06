@@ -11,6 +11,7 @@ import { type Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import type {
   InventoryItem,
+  Supplier,
   Category,
   DashboardStats,
   ApiResponse,
@@ -44,7 +45,7 @@ export class ApiService {
       );
   }
 
-  
+
   createInventoryItem(
     item: CreateInventoryItemRequest
   ): Observable<InventoryItem> {
@@ -56,6 +57,16 @@ export class ApiService {
       );
   }
 
+  // ==================== SUPPLIERS API ====================
+
+  getSuppliers(): Observable<Supplier[]> {
+    return this.http
+      .get<ApiResponse<Supplier[]>>(`${this.baseUrl}/suppliers`)
+      .pipe(
+        map((response) => response.data),
+        catchError(this.handleError)
+      );
+  }
 
   // ==================== CATEGORIES API ====================
 

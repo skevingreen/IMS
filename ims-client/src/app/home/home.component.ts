@@ -8,9 +8,7 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { environment } from '../../environments/environment';
 import { RouterModule } from '@angular/router';
-
 
 @Component({
   selector: 'app-home',
@@ -105,14 +103,5 @@ import { RouterModule } from '@angular/router';
 })export class HomeComponent {
   serverMessage: string = '';
 
-  constructor(private http: HttpClient) {
-    /*
-    setTimeout(() => {
-      this.http.get(`${environment.apiBaseUrl}/api`).subscribe({
-        next: (res: any) => this.serverMessage = res['message'],
-        error: () => this.serverMessage = 'Error loading server message'
-      });
-    }, 2000);
-    */
-  }
+  constructor(private http: HttpClient) {}
 }

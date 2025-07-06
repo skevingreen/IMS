@@ -27,6 +27,15 @@ export interface Category {
   dateModified: string;
 }
 
+export interface Supplier {
+  _id: string;
+  supplierId: number;
+  supplierName: string;
+  contactInformation: string;
+  dateCreated: Date;
+  dateModified: Date;
+}
+
 export interface DashboardStats {
   totalItems: number;
   totalSuppliers: number;
@@ -56,3 +65,8 @@ export interface CreateCategoryRequest {
   description: string;
 }
 
+export interface CreateSupplierRequest {
+  supplierName: string;
+  contactInformation: string;
+  address: string;
+}
