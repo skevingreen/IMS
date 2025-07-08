@@ -68,8 +68,7 @@ import { Category } from '../../category/category';
                 <td class="item-page__table-cell">{{ item.price }}</td>
                 <td class="item-page__table-cell">{{ item.dateCreated }}</td>
                 <td class="item-page__table-cell item-page__table-cell--functions">
-                  <!-- a routerLink="/item/{{item._id}}" class="item-page__icon- link"><i class="fas fa-edit"></i></a -->
-                  <a (click)="deleteItem(item._id)" class="item-page__icon-link"><i class="fas fa-edit"></i></a>
+                  <a routerLink="/items/{{ item._id }}" class="item-page__icon-link"><i class="fas fa-edit"></i></a>
                   <a (click)="deleteItem(item._id)" class="item-page__icon-link"><i class="fas fa-trash-alt"></i></a>
                 </td>
               </tr>
@@ -220,10 +219,11 @@ export class ItemListComponent {
     this.itemService.getItems().subscribe({
       next: (items: Item[]) => {
         this.items = items;
-        console.log(`Items: ${JSON.stringify(this.items)}`);
+        //console.log(`Items: ${JSON.stringify(this.items)}`);
       },
       error: (err: any) => {
         console.error(`Error occurred while retrieving items: ${err}`);
+        this.items = [];
       }
     });
   }

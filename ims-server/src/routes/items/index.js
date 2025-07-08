@@ -28,6 +28,17 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+router.get('/:inventoryItemId', async (req, res, next) => {
+  try {
+    const tempItem = await inventoryItem.findOne({ _id: req.params.inventoryItemId }); // don't use find() here or you're gonna have a bad time
+
+    res.send(tempItem);
+  } catch (err) {
+    console.error(`Error while getting item: ${err}`);
+    next(err);
+  }
+});
+
 router.post('/', async (req, res, next) => {
   try {
     const valid = validateAddItem(req.body);
@@ -37,7 +48,7 @@ router.post('/', async (req, res, next) => {
     }
 
     const payload = {
-      ...req.body
+      ...req.body // expand the body
     }
 
     const item = new inventoryItem(payload);
@@ -49,6 +60,25 @@ router.post('/', async (req, res, next) => {
     });
   } catch (err) {
     console.error(`Error while creating item: ${err}`); next(err);
+  }
+});
+
+router.patch('/:inventoryItemId', async (req, res, next) => {
+  try {
+    // using a variable called "item" hoses the query for some reason
+    const tempItem = await inventoryItem.findOne({ _id: req.params.inventoryItemId });
+
+    tempItem.set(req.body);
+
+    await tempItem.save();
+
+    res.send({
+      message: 'Item updated successfully',
+      id: tempItem._id
+    });
+  } catch (err) {
+    console.error(`Error while updating item: ${err}`);
+    next(err);
   }
 });
 

@@ -6,10 +6,8 @@ import { ItemDetailsComponent } from './item-details.component';
 import { ItemService } from '../item.service';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
-/*
 import { of, throwError } from 'rxjs';
 import { Item } from '../item';
-*/
 
 describe('ItemDetailsComponent', () => {
   let component: ItemDetailsComponent;
@@ -36,5 +34,16 @@ describe('ItemDetailsComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it ('should have a valid form when all fields are filled correctly', () => {
+    component.itemForm.controls['category'].setValue('Electronics');
+    component.itemForm.controls['supplier'].setValue('Tech Tonic');
+    component.itemForm.controls['name'].setValue('Apple Watch');
+    component.itemForm.controls['description'].setValue('Smartwatch designed to work with Apple ecosystem');
+    component.itemForm.controls['quantity'].setValue('19');
+    component.itemForm.controls['price'].setValue('300.01');
+
+    expect(component.itemForm.valid).toBeTruthy();
   });
 });

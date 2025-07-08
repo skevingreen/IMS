@@ -18,16 +18,16 @@ export const routes: Routes = [
     component: HomeComponent
   },
   {
+    path: 'items/:inventoryItemId',
+    component: ItemDetailsComponent
+  },
+  {
     path: 'items',
     component: ItemListComponent
   },
   {
     path: 'items/add',
     component: ItemAddComponent
-  },
-  {
-    path: 'items/:inventoryItemsId',
-    component: ItemDetailsComponent
   },
   {
     path: 'suppliers',

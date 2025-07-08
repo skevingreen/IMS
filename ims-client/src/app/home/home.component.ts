@@ -33,6 +33,10 @@ import { CommonModule } from '@angular/common';
       border-radius: 12px;
     }
 
+    p {
+      color: rgb(112, 177, 247);
+    }
+
     h2 {
       font-size: 20px;
       margin-bottom: 16px;

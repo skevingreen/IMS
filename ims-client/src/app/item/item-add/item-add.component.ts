@@ -86,11 +86,6 @@ import { SupplierService } from '../../supplier/supplier.service';
     </div>
   `,
   styles: `
-    .item-add-page__form-row {
-      /* display: flex; */
-      /* justify-content: center; */
-    }
-
     select {
       border: 1px solid rgb(112, 177, 247);
       color: rgb(112, 177, 247);
@@ -120,16 +115,6 @@ import { SupplierService } from '../../supplier/supplier.service';
       font-style: italic;
       margin-bottom: 20px;
     }
-
-    /*
-    .item-add-page__card {
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      padding: 20px;
-      margin-top: 20px;
-    }
-    */
 
     .item-add-page__form {
       display: ﬂex;
@@ -191,8 +176,6 @@ export class ItemAddComponent {
     description: [null, Validators.compose([Validators.required, Validators.minLength(1)])],
     quantity: [null, Validators.required],
     price: [null, Validators.required],
-    // dateCreated: ,
-    // dateModified:
   });
 
   constructor(
@@ -206,7 +189,6 @@ export class ItemAddComponent {
       this.categoryService.getCategories().subscribe({
         next: (categories: any) => {
           this.categories = categories;
-          //console.log("categories from item-add: " + categories);
         }
       });
 

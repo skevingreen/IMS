@@ -5,10 +5,10 @@
  * Description: Unit tests for item-list component.
  */
 
-import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { ItemService } from './item.service';
-import { Item } from './item';
+import { Item, UpdateItemDTO } from './item';
 import { environment } from '../../environments/environment';
 
 describe('ItemService', () => {
@@ -67,5 +67,35 @@ describe('ItemService', () => {
     const req = httpMock.expectOne(`${environment.apiBaseUrl}/api/items`);
     expect(req.request.method).toBe('GET');
     req.flush(mockItems);
+  });
+
+  it('should update an existing item via the API', () => {
+    let currentDate = new Date().toISOString();
+
+    const updatedItem: UpdateItemDTO = {
+      categoryId: 9999,
+      supplierId: 9000,
+      name: 'Wall Clock',
+      description: 'Decorative Digital Clock',
+      quantity: 21,
+      price: 37.77,
+      dateCreated: '2021-01-01T00:00:00.000Z',
+      dateModified: currentDate
+    };
+
+    const mockResponse: Item = {
+      _id: '3f',
+      ...updatedItem
+    };
+
+    service.updateItem('1', updatedItem).subscribe(item => {
+      expect(item).toEqual(mockResponse);
+    });
+
+    const req = httpMock.expectOne(`${environment.apiBaseUrl}/api/items/1`);
+
+    expect(req.request.method).toBe('PATCH');
+    expect(req.request.body).toEqual(updatedItem);
+    req.flush(mockResponse);
   });
 });

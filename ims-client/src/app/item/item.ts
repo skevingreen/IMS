@@ -17,3 +17,4 @@ export interface Item {
 }
 
 export type AddItemDTO = Omit<Item, '_id'>;
+export type UpdateItemDTO = Omit<Item, '_id'>;
