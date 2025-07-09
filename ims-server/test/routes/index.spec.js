@@ -19,7 +19,6 @@ describe('GET /api', () => {
   // Close the database connection after all tests
   afterAll(
     async () => {
-      console.log("routes index spec afterAll");
       await mongoose.connection.close();
       console.log('/test/routes/index.spec.js database connection closed');
   });

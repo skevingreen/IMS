@@ -32,7 +32,6 @@ describe('Item Model Test', () => {
 
   // Close the database connection after all tests
   afterAll(async () => {
-    console.log("inventoryItems spec afterAll");
     await mongoose.connection.close();
     console.log('/test/models/inventoryItem.spec.js database connection closed');
   });

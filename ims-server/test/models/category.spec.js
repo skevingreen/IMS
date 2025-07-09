@@ -33,7 +33,6 @@ describe('Category Model Test', () => {
   // Close the database connection after all tests
   afterAll(
     async () => {
-      console.log("category spec afterAll");
       await mongoose.connection.close();
       console.log('/test/models/category.spec.js database connection closed');
     });
