@@ -49,6 +49,8 @@ describe('ItemAddComponent', () => {
   });
 
   it('should call addItem and navigate on successful form submission', () => {
+    const date = new Date().toISOString();
+
     const addItemDTO: AddItemDTO = {
       categoryId: 11,
       supplierId: 12,
@@ -56,8 +58,7 @@ describe('ItemAddComponent', () => {
       description: 'hot new item',
       quantity: 5,
       price: 15.45,
-      dateCreated: new Date().toISOString(),
-      dateModified: new Date().toISOString()
+      dateCreated: date
     };
 
     const mockItem: Item = {
@@ -68,8 +69,7 @@ describe('ItemAddComponent', () => {
       description: 'hot new item',
       quantity: 5,
       price: 15.45,
-      dateCreated: new Date().toISOString(),
-      dateModified: new Date().toISOString()
+      dateCreated: date
     };
 
     spyOn(itemService, 'addItem').and.returnValue(of(mockItem));

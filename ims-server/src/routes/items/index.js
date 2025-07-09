@@ -10,17 +10,16 @@ const Ajv = require('ajv');
 const createError = require('http-errors');
 const router = express.Router();
 const { inventoryItem } = require('../../models/inventoryItem');
-const { addItemSchema /*, updateGardenSchema*/ } = require('../../schemas');
+const { addItemSchema, updateItemSchema } = require('../../schemas');
 
 const ajv = new Ajv();
 const validateAddItem = ajv.compile(addItemSchema);
-//const validateUpdateItem = ajv.compile(updateItemSchema);
+const validateUpdateItem = ajv.compile(updateItemSchema);
 
 router.get('/', async (req, res, next) => {
   try {
     const items = await inventoryItem.find({});
 
-    //console.log("items: " + items);
     res.send(items);
   } catch (err) {
     console.error(`Error while getting items: ${err}`);
@@ -56,7 +55,8 @@ router.post('/', async (req, res, next) => {
     await item.save();
 
     res.send({
-      message: 'Item created successfully', id: item._id
+      message: 'Item created successfully',
+      id: item._id
     });
   } catch (err) {
     console.error(`Error while creating item: ${err}`); next(err);
@@ -68,8 +68,13 @@ router.patch('/:inventoryItemId', async (req, res, next) => {
     // using a variable called "item" hoses the query for some reason
     const tempItem = await inventoryItem.findOne({ _id: req.params.inventoryItemId });
 
-    tempItem.set(req.body);
+    const valid = validateUpdateItem(req.body);
 
+    if(!valid) {
+      return next(createError(400, ajv.errorsText(validateUpdateItem.errors)));
+    }
+
+    tempItem.set(req.body);
     await tempItem.save();
 
     res.send({

@@ -1,7 +1,7 @@
 /**
  * Authors: Dua Hasan, Scott Green
  * Date: 4 July 2025
- * File: category.spec.js
+ * File: inventoryItems.spec.js
  * Description: Unit tests for inventoryItem model.
  */
 
@@ -32,6 +32,7 @@ describe('Item Model Test', () => {
 
   // Close the database connection after all tests
   afterAll(async () => {
+    console.log("inventoryItems spec afterAll");
     await mongoose.connection.close();
     console.log('/test/models/inventoryItem.spec.js database connection closed');
   });

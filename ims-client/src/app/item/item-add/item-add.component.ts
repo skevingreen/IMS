@@ -210,15 +210,11 @@ export class ItemAddComponent {
         description: this.itemForm.controls['description'].value,
         quantity: parseInt(this.itemForm.controls['quantity'].value),
         price: parseFloat(this.itemForm.controls['price'].value),
-        dateCreated: dateCreated,
-        dateModified: dateCreated
-        // dateCreated: this.itemForm.controls['dateCreated'].value,
-        // dateModified: this.itemForm.controls['dateModified'].value
+        dateCreated: dateCreated
       }
 
       this.itemService.addItem(newItem).subscribe({
         next: (result: any) => {
-          console.log(`Item created successfully: ${result.message}`);
           this.router.navigate(['/items']);
         },
         error: (err: any) => {

@@ -12,9 +12,9 @@ export interface Item {
   description: string;
   quantity: number;
   price: number;
-  dateCreated: string;
-  dateModified: string;
+  dateCreated?: string;
+  dateModified?: string;
 }
 
-export type AddItemDTO = Omit<Item, '_id'>;
-export type UpdateItemDTO = Omit<Item, '_id'>;
+export type AddItemDTO = Omit<Item, '_id' | 'dateModified'>;
+export type UpdateItemDTO = Omit<Item, '_id' | 'dateCreated' | 'dateModified'>;

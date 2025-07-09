@@ -70,8 +70,6 @@ describe('ItemService', () => {
   });
 
   it('should update an existing item via the API', () => {
-    let currentDate = new Date().toISOString();
-
     const updatedItem: UpdateItemDTO = {
       categoryId: 9999,
       supplierId: 9000,
@@ -79,13 +77,11 @@ describe('ItemService', () => {
       description: 'Decorative Digital Clock',
       quantity: 21,
       price: 37.77,
-      dateCreated: '2021-01-01T00:00:00.000Z',
-      dateModified: currentDate
     };
 
     const mockResponse: Item = {
       _id: '3f',
-      ...updatedItem
+      ...updatedItem  // expand updated item
     };
 
     service.updateItem('1', updatedItem).subscribe(item => {

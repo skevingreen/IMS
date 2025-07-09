@@ -40,7 +40,7 @@ let supplierSchema = new Schema({
 
 supplierSchema.pre('save', function(next) { // pre db hook
   if (!this.isNew) {                        // when record saved, date modified is updated
-    this.dateModified = new Date();
+    this.dateModified = new Date().toISOString();
   }
   next();
 })

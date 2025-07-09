@@ -51,17 +51,17 @@ let inventoryItemSchema = new Schema({
     }
   },
   dateCreated: {
-    type: Date,
-    default: Date.now
+    type: String,
+    default: new Date().toISOString()
   },
   dateModified: {
-    type: Date
+    type: String
   }
 }, {collection: 'inventoryItems'});
 
 inventoryItemSchema.pre('save', function(next) {  // pre db hook
   if (!this.isNew) {                              // when record saved, date modified is updated
-    this.dateModified = new Date();
+    this.dateModified = new Date().toISOString();
   }
   next();
 })

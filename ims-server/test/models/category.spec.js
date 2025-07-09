@@ -31,10 +31,12 @@ describe('Category Model Test', () => {
   });
 
   // Close the database connection after all tests
-  afterAll(async () => {
-    await mongoose.connection.close();
-    console.log('/test/models/category.spec.js database connection closed');
-  });
+  afterAll(
+    async () => {
+      console.log("category spec afterAll");
+      await mongoose.connection.close();
+      console.log('/test/models/category.spec.js database connection closed');
+    });
 
   it('should create a Category successfully', async () => {
     const CategoryData = {

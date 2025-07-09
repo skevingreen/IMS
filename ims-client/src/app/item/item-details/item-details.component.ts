@@ -191,9 +191,7 @@ import { SupplierService } from '../../supplier/supplier.service';
 
     this.itemService.getItem(this.inventoryItemId).subscribe({
       next: (item: Item) => {
-        //console.log("item-details item.categoryId: " + item.categoryId);
         this.item = item;
-        this.dateCreated = item.dateCreated;
         this.itemForm.setValue({
           category: item.categoryId,
           supplier: item.supplierId,
@@ -214,17 +212,15 @@ import { SupplierService } from '../../supplier/supplier.service';
         name: this.itemForm.controls['name'].value,
         description: this.itemForm.controls['description'].value,
         quantity: this.itemForm.controls['quantity'].value,
-        price: this.itemForm.controls['price'].value,
-        dateCreated: this.dateCreated,
-        dateModified: new Date().toISOString()
+        price: this.itemForm.controls['price'].value
       };
 
-      //console.log('Update Item DTO:', updateItemDTO);
-      //console.log('this.inventoryId: ' + this.inventoryItemId);
       this.itemService.updateItem(this.inventoryItemId, updateItemDTO).subscribe({
         next: (result: any) => {
-          //console.log(`ItemId: ${result.ItemId} ${result.message}`);
           this.router.navigate(['/items']);
+        },
+        error: (err: any) => {
+          console.error('Error updating item', err);
         }
       });
     }

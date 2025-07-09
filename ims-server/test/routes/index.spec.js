@@ -17,9 +17,11 @@ app.use('/', router);
 
 describe('GET /api', () => {
   // Close the database connection after all tests
-  afterAll(async () => {
-    await mongoose.connection.close();
-    console.log('/test/routes/index.spec.js database connection closed');
+  afterAll(
+    async () => {
+      console.log("routes index spec afterAll");
+      await mongoose.connection.close();
+      console.log('/test/routes/index.spec.js database connection closed');
   });
 
   it('should return status 200', async () => {
