@@ -82,6 +82,24 @@ describe('Item API', () => {
       expect(response.status).toBe(500);
     });
 
+    it('should return 404 if item does not exist', async () => {
+      inventoryItem.findOne.mockResolvedValue(null); // Simulate item not found
+
+      const response = await request(app)
+        .patch('/api/items/507f1f77bcf86cd799439099') // Some non-existing ID
+        .send({
+          categoryId: 57,
+          supplierId: 75,
+          name: 'NonExistent',
+          description: 'No description',
+          quantity: 0,
+          price: 0
+        });
+
+      expect(response.status).toBe(404);
+      expect(response.body.message).toMatch(/not found/i);
+    });
+
     /*
     it('should return an empty array when no items are found', async () => {
       inventoryItem.findOne.mockResolvedValue(); // Mock no documents returned
@@ -92,5 +110,49 @@ describe('Item API', () => {
       expect(response.body).toEqual([]);
     });
     */
+  });
+  
+  describe('GET /api/items/:inventoryItemId', () => {
+    it('should retrieve a single item by ID', async () => {
+      const mockItem = {
+        _id: '507f1f77bcf86cd799439011',
+        categoryId: 1,
+        supplierId: 2,
+        name: 'Sample Item',
+        description: 'Sample description',
+        quantity: 10,
+        price: 99.99,
+        dateCreated: '2024-01-01T00:00:00.000Z'
+      };
+
+      inventoryItem.findOne.mockResolvedValue(mockItem);
+
+      const response = await request(app).get('/api/items/507f1f77bcf86cd799439011');
+
+      expect(response.status).toBe(200);
+      expect(response.body).toMatchObject({
+        _id: mockItem._id,
+        name: mockItem.name,
+        quantity: mockItem.quantity,
+      });
+    });
+
+    it('should return 404 if item not found', async () => {
+      inventoryItem.findOne.mockResolvedValue(null);
+
+      const response = await request(app).get('/api/items/507f1f77bcf86cd799439099');
+
+      expect(response.status).toBe(404);
+      expect(response.body.message).toMatch(/not found/i);
+    });
+
+    it('should handle errors when fetching an item', async () => {
+      inventoryItem.findOne.mockRejectedValue(new Error('Database error'));
+
+      const response = await request(app).get('/api/items/507f1f77bcf86cd799439011');
+
+      expect(response.status).toBe(500);
+    });
+
   });
 });

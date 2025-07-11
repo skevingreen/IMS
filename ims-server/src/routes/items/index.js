@@ -67,6 +67,10 @@ router.patch('/:inventoryItemId', async (req, res, next) => {
   try {
     // using a variable called "item" hoses the query for some reason
     const tempItem = await inventoryItem.findOne({ _id: req.params.inventoryItemId });
+    
+     if (!tempItem) {
+      return res.status(404).send({ message: 'Item not found' });
+    }
 
     const valid = validateUpdateItem(req.body);
 

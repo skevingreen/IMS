@@ -9,6 +9,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { of, throwError } from 'rxjs';
 import { Item, UpdateItemDTO } from '../item';
 
+
 describe('ItemDetailsComponent', () => {
   let component: ItemDetailsComponent;
   let fixture: ComponentFixture<ItemDetailsComponent>;
@@ -101,4 +102,65 @@ describe('ItemDetailsComponent', () => {
     expect(itemService.updateItem).toHaveBeenCalled();
     expect(console.error).toHaveBeenCalledWith('Error updating item', 'Error updating item');
   }));
+
+  //  tests for getItem by ID
+
+  it('should call getItem and populate the form with item data after component init', () => {
+    const mockItem: Item = {
+      _id: '1',
+      categoryId: 10,
+      supplierId: 20,
+      name: 'Test Item',
+      description: 'Test Description',
+      quantity: 5,
+      price: 100.50
+    };
+
+    spyOn(itemService, 'getItem').and.returnValue(of(mockItem));
+
+    // Recreate component to trigger lifecycle and getItem call
+    fixture = TestBed.createComponent(ItemDetailsComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+
+    expect(itemService.getItem).toHaveBeenCalledWith('1');
+    expect(component.itemForm.value).toEqual({
+      category: 10,
+      supplier: 20,
+      name: 'Test Item',
+      description: 'Test Description',
+      quantity: 5,
+      price: 100.50
+    });
+  });
+
+  it('should navigate to /items if inventoryItemId param is missing', () => {
+    const navSpy = spyOn(router, 'navigate');
+
+    // Mock ActivatedRoute to return empty param
+    const mockActivatedRoute = {
+      snapshot: { paramMap: { get: () => '' } }
+    };
+
+    // Create component with mocked ActivatedRoute
+    fixture = TestBed.overrideProvider(ActivatedRoute, { useValue: mockActivatedRoute }).createComponent(ItemDetailsComponent);
+    component = fixture.componentInstance;
+
+    fixture.detectChanges();
+
+    expect(navSpy).toHaveBeenCalledWith(['/items']);
+  });
+
+  it('should handle error if getItem fails', () => {
+    spyOn(itemService, 'getItem').and.returnValue(throwError(() => 'Item not found'));
+    const errorSpy = spyOn(console, 'error');
+
+    // Recreate component to trigger init and error handling
+    fixture = TestBed.createComponent(ItemDetailsComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+
+    expect(itemService.getItem).toHaveBeenCalledWith('1');
+  });
+
 });
