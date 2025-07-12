@@ -83,7 +83,19 @@ describe('ItemAddComponent', () => {
     component.itemForm.controls['price'].setValue(addItemDTO.price);
     component.onSubmit();
 
-    expect(itemService.addItem).toHaveBeenCalledWith(addItemDTO);
+    expect(itemService.addItem).toHaveBeenCalled();
+    
+    const calledArg = (itemService.addItem as jasmine.Spy).calls.mostRecent().args[0];
+    expect(calledArg.categoryId).toBe(addItemDTO.categoryId);
+    expect(calledArg.supplierId).toBe(addItemDTO.supplierId);
+    expect(calledArg.name).toBe(addItemDTO.name);
+    expect(calledArg.description).toBe(addItemDTO.description);
+    expect(calledArg.quantity).toBe(addItemDTO.quantity);
+    expect(calledArg.price).toBe(addItemDTO.price);
+
+    expect(typeof calledArg.dateCreated).toBe('string');
+    expect(Date.parse(calledArg.dateCreated)).not.toBeNaN();
+
     expect(router.navigate).toHaveBeenCalledWith(['/items']);
   });
 
