@@ -123,7 +123,7 @@ describe('ItemDetailsComponent', () => {
 
     spyOn(itemService, 'getItem').and.returnValue(of(mockItem));
 
-    // Recreate component to trigger lifecycle and getItem call
+    
     fixture = TestBed.createComponent(ItemDetailsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -139,28 +139,11 @@ describe('ItemDetailsComponent', () => {
     });
   });
 
-  it('should navigate to /items if inventoryItemId param is missing', () => {
-    const navSpy = spyOn(router, 'navigate');
-
-    // Mock ActivatedRoute to return empty param
-    const mockActivatedRoute = {
-      snapshot: { paramMap: { get: () => '' } }
-    };
-
-    // Create component with mocked ActivatedRoute
-    fixture = TestBed.overrideProvider(ActivatedRoute, { useValue: mockActivatedRoute }).createComponent(ItemDetailsComponent);
-    component = fixture.componentInstance;
-
-    fixture.detectChanges();
-
-    expect(navSpy).toHaveBeenCalledWith(['/items']);
-  });
-
   it('should handle error if getItem fails', () => {
     spyOn(itemService, 'getItem').and.returnValue(throwError(() => 'Item not found'));
     const errorSpy = spyOn(console, 'error');
 
-    // Recreate component to trigger init and error handling
+
     fixture = TestBed.createComponent(ItemDetailsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -168,3 +151,29 @@ describe('ItemDetailsComponent', () => {
     expect(itemService.getItem).toHaveBeenCalledWith('1');
   });
 });
+
+describe('ItemDetailsComponent - Missing ID Scenario', () => {
+  let router: Router;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [ReactiveFormsModule, HttpClientModule, RouterTestingModule, ItemDetailsComponent],
+      providers: [
+        ItemService,
+        { provide: ActivatedRoute, useValue: { snapshot: { paramMap: { get: () => '' } } } }
+      ]
+    }).compileComponents();
+
+    router = TestBed.inject(Router);
+  });
+
+  it('should navigate to /items if inventoryItemId param is missing', () => {
+    const navSpy = spyOn(router, 'navigate');
+    const fixture = TestBed.createComponent(ItemDetailsComponent);
+    const component = fixture.componentInstance;
+    fixture.detectChanges();
+
+    expect(navSpy).toHaveBeenCalledWith(['/items']);
+  });
+});
+
