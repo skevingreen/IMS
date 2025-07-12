@@ -99,19 +99,8 @@ describe('Item API', () => {
       expect(response.status).toBe(404);
       expect(response.body.message).toMatch(/not found/i);
     });
-
-    /*
-    it('should return an empty array when no items are found', async () => {
-      inventoryItem.findOne.mockResolvedValue(); // Mock no documents returned
-
-      const response = await request(app).patch('/api/items/12345');
-
-      expect(response.status).toBe(200);
-      expect(response.body).toEqual([]);
-    });
-    */
   });
-  
+
   describe('GET /api/items/:inventoryItemId', () => {
     it('should retrieve a single item by ID', async () => {
       const mockItem = {

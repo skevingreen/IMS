@@ -1,3 +1,10 @@
+/**
+ * Authors: Dua Hasan, Scott Green
+ * Date: 11 July 2025
+ * File: item-details.component.spec.ts
+ * Description: Unit tests for item-details.component.spec.ts.
+ */
+
 import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -8,7 +15,6 @@ import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of, throwError } from 'rxjs';
 import { Item, UpdateItemDTO } from '../item';
-
 
 describe('ItemDetailsComponent', () => {
   let component: ItemDetailsComponent;
@@ -37,7 +43,7 @@ describe('ItemDetailsComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it ('should have a valid form when all fields are filled correctly', () => {
+  it ('should have a valid form when all fields to be updated are filled correctly', () => {
     component.itemForm.controls['category'].setValue('Electronics');
     component.itemForm.controls['supplier'].setValue('Tech Tonic');
     component.itemForm.controls['name'].setValue('Apple Watch');
@@ -86,7 +92,7 @@ describe('ItemDetailsComponent', () => {
     expect(router.navigate).toHaveBeenCalledWith(['/items']);
   });
 
-  it('should handle error on form submission failure', fakeAsync(() => {
+  it('should handle error on form submission (save changes) failure', fakeAsync(() => {
     const spy = spyOn(console, 'error');
     const isError = spyOn(itemService, 'updateItem').and.returnValue(throwError('Error updating item'));
 
@@ -104,7 +110,6 @@ describe('ItemDetailsComponent', () => {
   }));
 
   //  tests for getItem by ID
-
   it('should call getItem and populate the form with item data after component init', () => {
     const mockItem: Item = {
       _id: '1',
@@ -162,5 +167,4 @@ describe('ItemDetailsComponent', () => {
 
     expect(itemService.getItem).toHaveBeenCalledWith('1');
   });
-
 });

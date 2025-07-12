@@ -1,3 +1,10 @@
+/**
+ * Authors: Dua Hasan, Scott Green
+ * Date: 11 July 2025
+ * File: item-details.component.ts
+ * Description: Component to display and update a specific Items.
+ */
+
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -212,7 +219,7 @@ import { SupplierService } from '../../supplier/supplier.service';
         name: this.itemForm.controls['name'].value,
         description: this.itemForm.controls['description'].value,
         quantity: this.itemForm.controls['quantity'].value,
-        price: this.itemForm.controls['price'].value
+        price: parseFloat(this.itemForm.controls['price'].value)
       };
 
       this.itemService.updateItem(this.inventoryItemId, updateItemDTO).subscribe({
