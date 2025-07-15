@@ -1,3 +1,10 @@
+/**
+ * Authors: Dua Hasan, Scott Green
+ * Date: 4 July 2025
+ * File: item-add.component.spec.ts
+ * Description: Unit tests for item-add component.
+ */
+
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -84,7 +91,7 @@ describe('ItemAddComponent', () => {
     component.onSubmit();
 
     expect(itemService.addItem).toHaveBeenCalled();
-    
+
     const calledArg = (itemService.addItem as jasmine.Spy).calls.mostRecent().args[0];
     expect(calledArg.categoryId).toBe(addItemDTO.categoryId);
     expect(calledArg.supplierId).toBe(addItemDTO.supplierId);

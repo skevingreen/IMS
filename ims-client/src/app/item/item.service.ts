@@ -26,14 +26,17 @@ export class ItemService {
     return this.http.get<Item>(`${environment.apiBaseUrl}/api/items/${inventoryItemId}`);
   }
 
+  // Creates a new item in the database
   addItem(item: AddItemDTO) {
     return this.http.post<Item>(`${environment.apiBaseUrl}/api/items`, item);
   }
 
+  // Updates an existing item in the database
   updateItem(inventoryItemId: string, updateItem: UpdateItemDTO) {
     return this.http.patch<Item>(`${environment.apiBaseUrl}/api/items/${inventoryItemId}`, updateItem);
   }
 
+  // Removes an existing item from the database
   deleteItem(inventoryItemId: string) {
     return this.http.delete(`${environment.apiBaseUrl}/api/items/${inventoryItemId}`);
   }

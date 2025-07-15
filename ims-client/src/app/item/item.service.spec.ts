@@ -1,8 +1,8 @@
 /**
  * Authors: Dua Hasan, Scott Green
  * Date: 4 July 2025
- * File: item-service.spec.ts
- * Description: Unit tests for item-list component.
+ * File: item.service.spec.ts
+ * Description: Unit tests for item.service.
  */
 
 import { TestBed } from '@angular/core/testing';

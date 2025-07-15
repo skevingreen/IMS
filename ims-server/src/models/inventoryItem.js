@@ -1,6 +1,6 @@
 /**
  * Authors: Dua Hasan, Scott Green
- * Date: 4 July 2025
+ * Date: 14 July 2025
  * File: category.js
  * Description: Mongoose model for inventoryItem documents.
  */
@@ -22,7 +22,7 @@ let inventoryItemSchema = new Schema({
     required: [true, 'Item name is required'],
     minlength: [1, 'Item name must be at least 1 character'],
     maxlength: [100, 'Item name cannot exceed 100 characters'],
-    unique: true
+    unique: true  // Name must be unique
   },
   description: {
     type: String,
@@ -41,7 +41,7 @@ let inventoryItemSchema = new Schema({
     }
   },
   price: {
-    type: Number,
+    type: mongoose.Types.Double,  // Note: a number like 100.00 will be stored as a double but in the form of 100
     required: [true, 'Item price is required'],
     validate: {
       validator: function(v) {

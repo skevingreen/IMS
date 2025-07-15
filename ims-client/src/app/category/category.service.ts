@@ -1,8 +1,8 @@
 /**
  * Authors: Dua Hasan, Scott Green
  * Date: 4 July 2025
- * File: item.service.ts
- * Description: Service for performing actions on Items.
+ * File: category.service.ts
+ * Description: Service for performing actions on Categories.
  */
 
 import { HttpClient } from '@angular/common/http';

@@ -1,9 +1,15 @@
+/**
+ * Authors: Dua Hasan, Scott Green
+ * Date: 4 July 2025
+ * File: item-add.component.ts
+ * Description: Component for adding an item to the database.
+ */
+
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ItemService } from '../item.service';
-import { Item } from '../item';
 import { Category } from '../../category/category';
 import { Supplier } from '../../supplier/supplier';
 import { AddItemDTO } from '../item';

@@ -1,8 +1,13 @@
+/**
+ * Authors: Dua Hasan, Scott Green
+ * Date: 4 July 2025
+ * File: home.component.spec.ts
+ * Description: Unit tests for home.component.
+ */
+
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { HomeComponent } from './home.component';
-import { environment } from '../../environments/environment';
-import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 
 describe('HomeComponent', () => {

@@ -8,7 +8,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ItemListComponent } from './item-list.component';
 import { ItemService } from '../item.service';
-import { of, throwError } from 'rxjs';
+import { throwError } from 'rxjs';
 import { Item } from '../item';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';

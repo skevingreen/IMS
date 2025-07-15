@@ -16,5 +16,6 @@ export interface Item {
   dateModified?: string;
 }
 
+// Data Transformation Objects
 export type AddItemDTO = Omit<Item, '_id' | 'dateModified'>;
 export type UpdateItemDTO = Omit<Item, '_id' | 'dateCreated' | 'dateModified'>;

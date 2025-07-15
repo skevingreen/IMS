@@ -2,7 +2,7 @@
  * Authors: Dua Hasan, Scott Green
  * Date: 4 July 2025
  * File: item.service.ts
- * Description: Service for performing actions on Items.
+ * Description: Service for performing actions on Suppliers.
  */
 
 import { HttpClient } from '@angular/common/http';
