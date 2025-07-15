@@ -36,7 +36,7 @@ describe('Item Model Test', () => {
     console.log('/test/models/inventoryItem.spec.js database connection closed');
   });
 
-  it('should create a Item successfully', async () => {
+  it('should create an Item successfully', async () => {
     const ItemData = {
       categoryId: 1,
       supplierId: 3,
@@ -54,7 +54,7 @@ describe('Item Model Test', () => {
     expect(savedItem.name).toBe(ItemData.name);
     expect(savedItem.description).toBe(ItemData.description);
     expect(savedItem.quantity).toBe(ItemData.quantity);
-    expect(savedItem.price).toBe(ItemData.price);
+    expect(parseFloat(savedItem.price)).toBe(ItemData.price);
   });
 
   // missing categoryId
