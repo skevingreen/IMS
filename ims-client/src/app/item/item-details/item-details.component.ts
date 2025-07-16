@@ -1,6 +1,6 @@
 /**
  * Authors: Dua Hasan, Scott Green
- * Date: 11 July 2025
+ * Date: 15 July 2025
  * File: item-details.component.ts
  * Description: Component to display and update a specific Items.
  */
@@ -153,16 +153,15 @@ import { SupplierService } from '../../supplier/supplier.service';
   `
 })
  export class ItemDetailsComponent {
-  categories: Category[] = [];
-  suppliers: Supplier[] = [];
-  inventoryItemId: string;
-  item: Item;
-  dateCreated: string = '';
+  categories: Category[] = [];  // holds the categories for the drop-down
+  suppliers: Supplier[] = [];   // holds the suppliers for the drop-down
+  inventoryItemId: string;      // the id for a particular item
+  item: Item;                   // a specific item
 
-  itemForm: FormGroup = this.fb.group({
+  itemForm: FormGroup = this.fb.group({   // all fields are required
     category: [null, Validators.required],
     supplier: [null, Validators.required],
-    name: [null, Validators.compose([Validators.required, Validators.minLength(1)])],
+    name: [null, Validators.compose([Validators.required, Validators.minLength(1)])], // name has to be at least one character long
     description: [null, Validators.required],
     quantity: [null, Validators.required],
     price: [null, Validators.required]
@@ -176,26 +175,31 @@ import { SupplierService } from '../../supplier/supplier.service';
     private categoryService: CategoryService,
     private supplierService: SupplierService
   ) {
+    // get the item id that was passed in from item-list
     this.inventoryItemId = this.route.snapshot.paramMap.get('inventoryItemId') || '';
     this.item = {} as Item;
 
+    // use the category service to get a list of categories for the dropdown
     this.categoryService.getCategories().subscribe({
       next: (categories: any) => {
         this.categories = categories;
       }
     });
 
+    // use the supplier service to get a list of suppliers for the dropdown
     this.supplierService.getSuppliers().subscribe({
       next: (suppliers: any) => {
         this.suppliers = suppliers;
       }
     });
 
+    // if the item id id blank, reroute back to item-list
     if (this.inventoryItemId === '') {
       this.router.navigate(['/items']);
       return;
     }
 
+    // retrieve the details of the particular item specified by the item id that was passed in
     this.itemService.getItem(this.inventoryItemId).subscribe({
       next: (item: Item) => {
         this.item = item;
@@ -211,9 +215,10 @@ import { SupplierService } from '../../supplier/supplier.service';
     });
   }
 
+  // update an item with the specified changes
   onSubmit() {
-    if (this.itemForm.valid) {
-      const updateItemDTO = {
+    if (this.itemForm.valid) {                // make sure the form is valid
+      const updateItemDTO: UpdateItemDTO = {  // create the DTO with the information to be updated
         categoryId: parseInt(this.itemForm.controls['category'].value),
         supplierId: parseInt(this.itemForm.controls['supplier'].value),
         name: this.itemForm.controls['name'].value,
@@ -222,12 +227,13 @@ import { SupplierService } from '../../supplier/supplier.service';
         price: parseFloat(this.itemForm.controls['price'].value)
       };
 
+      // call the item service to actually update the item
       this.itemService.updateItem(this.inventoryItemId, updateItemDTO).subscribe({
         next: (result: any) => {
           this.router.navigate(['/items']);
         },
         error: (err: any) => {
-          console.error('Error updating item', err);
+          console.error('Error updating item', err);  // log any errors to the console
         }
       });
     }

@@ -7,7 +7,6 @@
 
 const express = require('express');
 const Ajv = require('ajv');
-//const addFormats = require("ajv-formats");
 const createError = require('http-errors');
 const router = express.Router();
 const { inventoryItem } = require('../../models/inventoryItem');
@@ -15,8 +14,6 @@ const { addItemSchema, updateItemSchema } = require('../../schemas');
 
 // Validation
 const ajv = new Ajv();
-//addFormats(ajv, {formats: ["float"]});
-//addFormats(ajv);
 const validateAddItem = ajv.compile(addItemSchema);
 const validateUpdateItem = ajv.compile(updateItemSchema);
 
@@ -35,8 +32,8 @@ router.get('/', async (req, res, next) => {
 // Get a particular inventoryItem based on the provided inventoryItemId
 router.get('/:inventoryItemId', async (req, res, next) => {
   try {
-    const tempItem = await inventoryItem.findOne({ _id: req.params.inventoryItemId }); // don't use find() here or you're gonna have a bad time
-
+    const tempItem = await inventoryItem.findOne({ _id: req.params.inventoryItemId });  // don't use find() here or you're gonna have a bad time
+                                                                                        // (we want to match a single item, not find multiple items)
     if (!tempItem) {
       return res.status(404).send({ message: 'Item not found' });
     }

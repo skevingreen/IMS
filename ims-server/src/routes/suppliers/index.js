@@ -16,11 +16,11 @@ const ajv = new Ajv();
 //const validateAddItem = ajv.compile(addSupplierSchema);
 //const validateUpdateItem = ajv.compile(updateItemSchema);
 
+// Get a list of all suppliers
 router.get('/', async (req, res, next) => {
   try {
     const suppliers = await Supplier.find({});
 
-    //console.log("suppliers: " + suppliers);
     res.send(suppliers);
   } catch (err) {
     console.error(`Error while getting suppliers: ${err}`);

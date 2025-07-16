@@ -1,17 +1,18 @@
 /**
  * Authors: Dua Hasan, Scott Green
- * Date: 4 July 2025
+ * Date: 15 July 2025
  * File: item-list.component.ts
  * Description: Component to display and change Items.
  */
 
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { ItemService } from '../item.service';
 import { Item } from '../item';
 import { Category } from '../../category/category';
+import { CategoryService } from '../../category/category.service';
 
 @Component({
   selector: 'app-item-list-component',
@@ -23,12 +24,13 @@ import { Category } from '../../category/category';
 
       <!-- Group the dropdown and button for filtering by category together -->
       <div class="item-page__filter-container">
+        <!-- save the categoryId in filterType -->
         <select [(ngModel)]="filterType" class="item-page__filter" required>
           <!-- Show "All" categories selected by default. -->
-          <option value="" disabled>All</option>
+          <option value="" disabled>All Categories</option>
           <!-- Take the list of categories returned from the database and populate the filter dropdown. -->
           @for(category of categories; track category) {
-            <option value="{{ category }}">{{ category }}</option>
+            <option value="{{ category.categoryId }}">{{ category.categoryName }}</option>
           }
         </select>
 
@@ -65,7 +67,11 @@ import { Category } from '../../category/category';
                 <td class="item-page__table-cell">{{ item.name }}</td>
                 <td class="item-page__table-cell">{{ item.description }}</td>
                 <td class="item-page__table-cell">{{ item.quantity }}</td>
-                <td class="item-page__table-cell">{{ item.price }}</td>
+
+                <!-- {{ Value | Number : ‘ {minIntegerDigits}.{minFractionDigits}-{maxFractionDigits} ‘}} -->
+                <!-- https://www.bacancytechnology.com/qanda/angular/format-float-double-with-angular -->
+                <td class="item-page__table-cell">{{ item.price | number: '1.2-2' }}</td>
+
                 <td class="item-page__table-cell">{{ item.dateCreated }}</td>
                 <td class="item-page__table-cell item-page__table-cell--functions">
                   <a routerLink="/items/{{ item._id }}" class="item-page__icon-link"><i class="fas fa-edit"></i></a>
@@ -214,16 +220,27 @@ export class ItemListComponent {
   serverMessage: string | null = null;
   serverMessageType: 'success' | 'error' | null = null;
 
-  constructor(private itemService: ItemService) {
+  constructor(
+    private itemService: ItemService,
+    private categoryService: CategoryService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {
     // Retrieve a list of all items from the database
     this.itemService.getItems().subscribe({
       next: (items: Item[]) => {
         this.items = items;
-        //console.log(`Items: ${JSON.stringify(this.items)}`);
       },
       error: (err: any) => {
         console.error(`Error occurred while retrieving items: ${err}`);
         this.items = [];
+      }
+    });
+
+    // Retrieve a list of all categories from the database
+    this.categoryService.getCategories().subscribe({
+      next: (categories: any) => {
+        this.categories = categories;
       }
     });
   }
@@ -233,10 +250,15 @@ export class ItemListComponent {
   }
 
   filterItems() {
-    alert("Method has not yet been implemented.\nTry again later.");
-  }
-
-  onSubmit() {
-    alert("Method has not yet been implemented.\nTry again later.");
+    // Call item service to query for a list of items that match the selected category
+    this.itemService.searchItems(this.filterType).subscribe({
+      next: (items: Item[]) => {
+        this.items = items;                                       // assign the retrieved items for a specific category
+      },
+      error: (err: any) => {
+        console.error('Error retrieving items by category', err); // note any errors
+        this.items = [];                                          // clear out the list of items
+      }
+    });
   }
 }

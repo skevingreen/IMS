@@ -18,16 +18,16 @@ export const routes: Routes = [
     component: HomeComponent
   },
   {
+    path: 'items/add',          // Do NOT swap items/add and item/:inventoryItemId or the wrong component is gonna get called
+    component: ItemAddComponent // ("add" will be interpreted as the :inventoryItemId if you do)
+  },
+  {
     path: 'items/:inventoryItemId',
     component: ItemDetailsComponent
   },
   {
     path: 'items',
     component: ItemListComponent
-  },
-  {
-    path: 'items/add',
-    component: ItemAddComponent
   },
   {
     path: 'suppliers',

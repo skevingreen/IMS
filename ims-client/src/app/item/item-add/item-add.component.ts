@@ -1,6 +1,6 @@
 /**
  * Authors: Dua Hasan, Scott Green
- * Date: 4 July 2025
+ * Date: 15 July 2025
  * File: item-add.component.ts
  * Description: Component for adding an item to the database.
  */
@@ -15,7 +15,6 @@ import { Supplier } from '../../supplier/supplier';
 import { AddItemDTO } from '../item';
 import { CategoryService } from '../../category/category.service';
 import { SupplierService } from '../../supplier/supplier.service';
-
 @Component({
   selector: 'app-item-add',
   standalone: true,
@@ -71,19 +70,7 @@ import { SupplierService } from '../../supplier/supplier.service';
             </div>
           </div>
 
-          <!--
-          <div class="item-add-page__form-row">
-            <div class="item-add-page__form-group">
-              <input type="text" id="dateCreated" class="item-add-page__form-control" formControlName="dateCreated" hidden value=>
-            </div>
-
-            <div class="item-add-page__form-group">
-              <input type="text" id="dateModified" class="item-add-page__form-control" formControlName="dateModified" hidden value=>
-            </div>
-          </div>
-          -->
-
-          <button type="submit" (click)="onSubmit()" class="item-add-page__btn">Save Changes</button>
+          <button type="submit" (click)="onSubmit()" class="item-add-page__btn">Add Item</button>
         </form>
       </div>
 
@@ -192,12 +179,14 @@ export class ItemAddComponent {
     private supplierService: SupplierService,
     private itemService: ItemService
    ){
+      // Call the category service to retrieve a list of categories for the drop-down
       this.categoryService.getCategories().subscribe({
         next: (categories: any) => {
           this.categories = categories;
         }
       });
 
+      // Call the supplier service to retrieve a list of suppliers for the drop-down
       this.supplierService.getSuppliers().subscribe({
         next: (suppliers: any) => {
           this.suppliers = suppliers;
@@ -205,26 +194,27 @@ export class ItemAddComponent {
       });
   }
 
+  // Save the new inventoryItem
   onSubmit() {
     if (this.itemForm.valid) {
-      const dateCreated = new Date().toISOString();
+      const dateCreated = new Date().toISOString();                     // Item is new so set the date to now
 
-      const newItem: AddItemDTO = {
-        categoryId: parseInt(this.itemForm.controls['category'].value),
-        supplierId: parseInt(this.itemForm.controls['supplier'].value),
-        name: this.itemForm.controls['name'].value,
-        description: this.itemForm.controls['description'].value,
-        quantity: parseInt(this.itemForm.controls['quantity'].value),
-        price: parseFloat(this.itemForm.controls['price'].value),
-        dateCreated: dateCreated
+      const newItem: AddItemDTO = {                                     // Created the AddItemDTO to be added to the database
+        categoryId: parseInt(this.itemForm.controls['category'].value), // Set the categoryId to the integer form of the selected category's id
+        supplierId: parseInt(this.itemForm.controls['supplier'].value), // Set the supplierId to the integer form of the selected supplier's id
+        name: this.itemForm.controls['name'].value,                     // Set the name based on form name
+        description: this.itemForm.controls['description'].value,       // Set the description based on form description
+        quantity: parseInt(this.itemForm.controls['quantity'].value),   // Set the quantity to the integer version of the form's quantity
+        price: parseFloat(this.itemForm.controls['price'].value),       // Set the price to the float version of the form's price
+        dateCreated: dateCreated                                        // Use the variable created above to set the date
       }
 
-      this.itemService.addItem(newItem).subscribe({
+      this.itemService.addItem(newItem).subscribe({                     // Call the addItem function of the itemService to add the new item to the database
         next: (result: any) => {
-          this.router.navigate(['/items']);
+          this.router.navigate(['/items']);                             // Automatically return to the item details page
         },
         error: (err: any) => {
-          console.error('Error creating item', err);
+          console.error('Error creating item', err);                    // Catch any errors and log them to the console
         }
       });
     }

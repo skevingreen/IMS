@@ -1,6 +1,6 @@
 /**
  * Authors: Dua Hasan, Scott Green
- * Date: 4 July 2025
+ * Date: 15 July 2025
  * File: item.service.ts
  * Description: Service for performing actions on Items.
  */
@@ -39,5 +39,10 @@ export class ItemService {
   // Removes an existing item from the database
   deleteItem(inventoryItemId: string) {
     return this.http.delete(`${environment.apiBaseUrl}/api/items/${inventoryItemId}`);
+  }
+
+  // Search for inventory items based on the provided category type
+  searchItems(categoryId: string) {
+    return this.http.get<Item[]>(`${environment.apiBaseUrl}/api/items/bycategory/${categoryId}`);
   }
 }
