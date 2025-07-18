@@ -125,4 +125,17 @@ router.get('/bycategory/:categoryId', async (req, res, next) => {
   }
 });
 
+router.delete('/:inventoryItemId', async (req, res, next)=> {
+  try{
+    await tempItem.deleteOne({_id:req.params.inventoryItemId});
+
+    res.send({
+      message: 'Item deleted successfully',
+      id: req.params.inventoryItemId
+    });
+  } catch (err) {
+    console.error(`Error while deleting item: ${err}`);
+    next(err);
+  }
+})
 module.exports = router;

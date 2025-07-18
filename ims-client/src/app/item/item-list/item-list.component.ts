@@ -246,7 +246,32 @@ export class ItemListComponent {
   }
 
   deleteItem(itemId: string) {
-    alert("Method has not yet been implemented.\nTry again later.");
+    if (!confirm('Are you sure you want to delete this item?')){
+      return;
+    }
+
+    this.itemService.deleteItem(itemId).subscribe({
+      next: () => {
+        console.log(`Item with ID ${itemId} deleted successfully`);
+        this.items = this.items.filter(p => p._id !== itemId);
+        this.serverMessageType = 'success';
+        this.serverMessage = `item with ID ${itemId} deleted successfully`;
+        this.clearMessageAfterDelay();
+      },
+      error: (err: any) => {
+        console.error(`Error occurred while deleting item with ID ${itemId}: ${err} `);
+        this.serverMessageType = 'error';
+        this.serverMessage = `Error occurred while deleting item with ID ${itemId}. Please try again later.`;
+        this.clearMessageAfterDelay();
+      }
+    });
+  }
+
+  private clearMessageAfterDelay() {
+    setTimeout(() => {
+      this.serverMessage = null;
+      this.serverMessageType = null;
+    }, 3000);
   }
 
   filterItems() {
