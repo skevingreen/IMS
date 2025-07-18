@@ -13,6 +13,7 @@ import { Item } from '../item';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { By } from '@angular/platform-browser';
+import { of } from 'rxjs';
 
 describe('ItemListComponent', () => {
   let component: ItemListComponent;
@@ -77,4 +78,56 @@ describe('ItemListComponent', () => {
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('.item-page__title')?.textContent).toContain('Item List');
   });
+
+it('should delete an item successfully when user confirms', () => {
+    const mockItem = {
+      _id: 'abc123',
+      name: 'Test Item',
+      categoryId: 1,
+      supplierId: 1,
+      description: 'desc',
+      quantity: 5,
+      price: 10,
+      dateCreated: '',
+      dateModified: ''
+    };
+
+    component.items = [mockItem];
+    spyOn(window, 'confirm').and.returnValue(true);
+    spyOn(itemService, 'deleteItem').and.returnValue(of({}));
+
+    component.deleteItem(mockItem._id);
+
+    expect(itemService.deleteItem).toHaveBeenCalledWith(mockItem._id);
+    expect(component.items.length).toBe(0);
+    expect(component.serverMessageType).toBe('success');
+    expect(component.serverMessage).toContain('deleted successfully');
+  });
+
+  it('should not delete item when user cancels confirmation', () => {
+    const mockItem = { _id: 'abc123', name: 'Item X', categoryId: 1, supplierId: 1, description: '', quantity: 1, price: 1, dateCreated: '', dateModified: '' };
+    component.items = [mockItem];
+    spyOn(window, 'confirm').and.returnValue(false); // user cancels
+    spyOn(itemService, 'deleteItem');
+
+    component.deleteItem(mockItem._id);
+
+    expect(itemService.deleteItem).not.toHaveBeenCalled();
+    expect(component.items.length).toBe(1); // item is still there
+  });
+
+  it('should handle error during deletion', () => {
+    const mockItem = { _id: 'abc123', name: 'Item Y', categoryId: 1, supplierId: 1, description: '', quantity: 1, price: 1, dateCreated: '', dateModified: '' };
+    component.items = [mockItem];
+    spyOn(window, 'confirm').and.returnValue(true);
+    spyOn(itemService, 'deleteItem').and.returnValue(throwError(() => new Error('Deletion failed')));
+
+    component.deleteItem(mockItem._id);
+
+    expect(itemService.deleteItem).toHaveBeenCalledWith(mockItem._id);
+    expect(component.serverMessageType).toBe('error');
+    expect(component.serverMessage).toContain('Error occurred while deleting');
+    expect(component.items.length).toBe(1); // item still in list
+  });
+
 });

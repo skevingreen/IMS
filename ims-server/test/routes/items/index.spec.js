@@ -144,4 +144,35 @@ describe('Item API', () => {
     });
 
   });
+
+  describe('DELETE /api/items/:inventoryItemId', () => {
+  beforeEach(() => {
+    jest.clearAllMocks(); // Clear any previous mock calls
+  });
+
+  it('should delete an item successfully', async () => {
+    inventoryItem.deleteOne.mockResolvedValue({ deletedCount: 1 });
+
+    const res = await request(app).delete('/api/items/507f1f77bcf86cd799439011');
+    expect(res.status).toBe(200);
+    expect(res.body.message).toMatch(/deleted/i);
+  });
+
+  it('should return 404 if item is not found', async () => {
+    inventoryItem.deleteOne.mockResolvedValue({ deletedCount: 0 });
+
+    const res = await request(app).delete('/api/items/507f1f77bcf86cd799439011');
+    expect(res.status).toBe(404);
+    expect(res.body.message).toMatch(/not found/i);
+  });
+
+  it('should handle errors during deletion', async () => {
+    inventoryItem.deleteOne.mockRejectedValue(new Error('Database error'));
+
+    const res = await request(app).delete('/api/items/507f1f77bcf86cd799439011');
+    expect(res.status).toBe(500);
+    expect(res.body.message).toMatch(/error/i);
+  });
+});
+
 });

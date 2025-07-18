@@ -125,17 +125,21 @@ router.get('/bycategory/:categoryId', async (req, res, next) => {
   }
 });
 
-router.delete('/:inventoryItemId', async (req, res, next)=> {
-  try{
-    await tempItem.deleteOne({_id:req.params.inventoryItemId});
+router.delete('/:inventoryItemId', async (req, res) => {
+  try {
+    const result = await inventoryItem.deleteOne({ _id: req.params.inventoryItemId });
 
-    res.send({
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ message: 'Item not found' });
+    }
+
+    res.status(200).json({
       message: 'Item deleted successfully',
       id: req.params.inventoryItemId
     });
   } catch (err) {
-    console.error(`Error while deleting item: ${err}`);
-    next(err);
+    console.error(`Error while deleting item: ${err.message}`);
+    res.status(500).json({ message: 'Database error' });
   }
-})
+});
 module.exports = router;
