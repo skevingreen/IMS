@@ -15,7 +15,7 @@ import { CommonModule } from '@angular/common';
   imports: [CommonModule],
   template: `
     <div class="home-container">
-      <h2>Welcome to the Inventory System</h2>
+      <h2>Welcome to the Inventory Management System</h2>
       <p>
         The idea of the Inventory Management System was inspired by the need for businesses to manage their inventory efficiently.
         whether you are a small business owner looking to keep track of stack levels or a warehouse manager needing to organize inventory,

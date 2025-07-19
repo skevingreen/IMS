@@ -1,6 +1,6 @@
 /**
  * Authors: Dua Hasan, Scott Green
- * Date: 14 July 2025
+ * Date: 18 July 2025
  * File: category.js
  * Description: Mongoose model for inventoryItem documents.
  */
@@ -35,7 +35,7 @@ let inventoryItemSchema = new Schema({
     required: [true, 'Item quantity is required'],
     validate: {
       validator: function(v) {
-        return v > 0;
+        return v >= 0;
       },
       message: props => `Negative quantity is not allowed: ${props.value}`
     }
@@ -45,7 +45,7 @@ let inventoryItemSchema = new Schema({
     required: [true, 'Item price is required'],
     validate: {
       validator: function(v) {
-        return v > 0;
+        return v >= 0;
       },
       message: props => `Negative price is not allowed: ${props.value}`
     }

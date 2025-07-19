@@ -8,11 +8,18 @@
 // Require statements
 const request = require('supertest');
 const express = require('express');
-const app = require('../src/app');
+const app = require('../src/app');  // When I add this, I get the work process has failed to exit gracefully... message from jest
 const { errorHandler } = require('../src/error-handler');
+const mongoose = require('mongoose');
 
 // Test cases
 describe('app.js', () => {
+  afterAll(async () => {  // Get rid of the jest error mentioned above.
+    await mongoose.disconnect();
+    await mongoose.connection.close();
+  });
+
+
   // Test the CORS configuration
   it('should set CORS headers', async () => {
     const response = await request(app).get('/api');

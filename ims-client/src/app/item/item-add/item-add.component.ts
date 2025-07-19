@@ -30,6 +30,7 @@ import { SupplierService } from '../../supplier/supplier.service';
             <div class="item-add-page__form-group">
               <label for="category" class="item-add-page__form-label">Category</label>
               <select id="category" class="item-add-page__form-control" formControlName="category">
+                <!-- Populate the category drop down -->
                 @for(category of categories; track category) {
                     <option value="{{ category.categoryId }}">{{ category.categoryName }}</option>
                   }
@@ -39,6 +40,7 @@ import { SupplierService } from '../../supplier/supplier.service';
             <div class="item-add-page__form-group">
               <label for="supplier" class="item-add-page__form-label">Supplier</label>
               <select id="supplier" class="item-add-page__form-control" formControlName="supplier">
+                <!-- Populate the supplier drop down -->
                 @for(supplier of suppliers; track supplier) {
                     <option value="{{ supplier.supplierId }}">{{ supplier.supplierName }}</option>
                   }
@@ -46,6 +48,7 @@ import { SupplierService } from '../../supplier/supplier.service';
             </div>
           </div>
 
+          <!-- Populate remaining form fields -->
           <div class="item-add-page__form-row">
             <div class="item-add-page__form-group">
               <label for="name" class="item-add-page__form-label">Name</label>
@@ -70,6 +73,7 @@ import { SupplierService } from '../../supplier/supplier.service';
             </div>
           </div>
 
+          <!-- Add Item button should call onSubmit() -->
           <button type="submit" (click)="onSubmit()" class="item-add-page__btn">Add Item</button>
         </form>
       </div>
@@ -86,10 +90,13 @@ import { SupplierService } from '../../supplier/supplier.service';
       width: 10%;
     }
 
+    /*
     .item-page__icon-link:hover {
       color: rgb(28, 11, 153);
     }
+    */
 
+    /* .item-add styles */
     .item-add-page {
       max-width: 80%;
       margin: 0 auto;
@@ -159,10 +166,10 @@ import { SupplierService } from '../../supplier/supplier.service';
   `
 })
 export class ItemAddComponent {
-  categories: Category[] = [];
-  suppliers: Supplier[] = [];
+  categories: Category[] = [];  // Holder for list of categories
+  suppliers: Supplier[] = [];   // Holder for list of suppliers
 
-  itemForm: FormGroup = this.fb.group({
+  itemForm: FormGroup = this.fb.group({ // Form validations
     category: [null, Validators.required],
     supplier: [null, Validators.required],
     name: [null, Validators.compose([Validators.required, Validators.minLength(1)])],

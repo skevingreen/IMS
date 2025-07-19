@@ -32,7 +32,7 @@ async function connectToDatabase() {
       dbName: dbName
     });
 
-    console.log(`Connection to the '${dbName}' database was successful`);
+    //console.log(`Connection to the '${dbName}' database was successful`);
   } catch(err) {
     console.error(`MongoDB connection error: ${err}`);
   }

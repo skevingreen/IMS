@@ -19,7 +19,7 @@ describe('Item Model Test', () => {
         dbName: 'IMS_Test'
       });
 
-      console.log('Connection to the IMS_Test database instance was successful');
+      //console.log('Connection to the IMS_Test database instance was successful');
     } catch (err) {
       console.error(`MongoDB connection error: ${err}`);
     }
@@ -31,9 +31,9 @@ describe('Item Model Test', () => {
   });
 
   // Close the database connection after all tests
-  afterAll(async () => {
+  afterAll(async () => {  // Get rid of the jest error
+    await mongoose.disconnect();
     await mongoose.connection.close();
-    console.log('/test/models/inventoryItem.spec.js database connection closed');
   });
 
   it('should create an Item successfully', async () => {

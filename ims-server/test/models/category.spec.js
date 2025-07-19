@@ -19,7 +19,7 @@ describe('Category Model Test', () => {
         dbName: 'IMS_Test'
       });
 
-      console.log('category.spec.js connection to the database instance was successful');
+      //console.log('category.spec.js connection to the database instance was successful');
     } catch (err) {
       console.error(`MongoDB connection error: ${err}`);
     }
@@ -31,11 +31,10 @@ describe('Category Model Test', () => {
   });
 
   // Close the database connection after all tests
-  afterAll(
-    async () => {
-      await mongoose.connection.close();
-      console.log('/test/models/category.spec.js database connection closed');
-    });
+  afterAll(async () => {  // Get rid of the jest error
+    await mongoose.disconnect();
+    await mongoose.connection.close();
+  });
 
   it('should create a Category successfully', async () => {
     const CategoryData = {
@@ -141,4 +140,3 @@ describe('Category Model Test', () => {
     expect(err.errors['categoryName'].message).toBe('Category categoryName cannot exceed 100 characters');
   });
 });
-

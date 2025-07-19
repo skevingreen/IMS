@@ -28,21 +28,24 @@ import { SupplierService } from '../../supplier/supplier.service';
           <div class="item-details-page__form-group">
             <label for="category" class="item-details-page__form-label">Category</label>
             <select id="category" class="item-details-page__form-control" formControlName="category">
-               @for(category of categories; track category) {
-                  <option value="{{ category.categoryId }}">{{ category.categoryName }}</option>
-                }
+              <!-- Populate the list of categories -->
+              @for(category of categories; track category) {
+                <option value="{{ category.categoryId }}">{{ category.categoryName }}</option>
+              }
             </select>
           </div>
 
           <div class="item-details-page__form-group">
             <label for="supplier" class="item-details-page__form-label">Supplier</label>
             <select id="supplier" class="item-details-page__form-control" formControlName="supplier">
-               @for(supplier of suppliers; track supplier) {
-                  <option value="{{ supplier.supplierId }}">{{ supplier.supplierName }}</option>
-                }
+              <!-- Populate the list of suppliers -->
+              @for(supplier of suppliers; track supplier) {
+                <option value="{{ supplier.supplierId }}">{{ supplier.supplierName }}</option>
+              }
             </select>
           </div>
 
+          <!-- Populate remaining fields -->
           <div class="item-details-page__form-group">
             <label for="name" class="item-details-page__form-label">Name</label>
             <input type="text" id="name" class="item-details-page__form-control" formControlName="name">
@@ -79,10 +82,13 @@ import { SupplierService } from '../../supplier/supplier.service';
       width: 10%;
     }
 
+    /*
     .item-page__icon-link:hover {
       color: rgb(28, 11, 153);
     }
+    */
 
+    /* .item-details styles */
     .item-details-page {
       max-width: 80%;
       margin: 0 auto;

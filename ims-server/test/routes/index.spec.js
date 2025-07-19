@@ -16,11 +16,9 @@ const app = express();
 app.use('/', router);
 
 describe('GET /api', () => {
-  // Close the database connection after all tests
-  afterAll(
-    async () => {
-      await mongoose.connection.close();
-      console.log('/test/routes/index.spec.js database connection closed');
+  afterAll(async () => {  // Get rid of jest error
+    await mongoose.disconnect();
+    await mongoose.connection.close();
   });
 
   it('should return status 200', async () => {

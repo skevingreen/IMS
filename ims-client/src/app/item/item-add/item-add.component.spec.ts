@@ -44,21 +44,22 @@ describe('ItemAddComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  // Create inventory item tests
   it('should have a valid form when all fields are filled correctly', () => {
-    component.itemForm.controls['category'].setValue('Electronics');
+    component.itemForm.controls['category'].setValue('Electronics');  // Fill in the form
     component.itemForm.controls['supplier'].setValue('Tech Tonic');
     component.itemForm.controls['name'].setValue('Test');
     component.itemForm.controls['description'].setValue('Truly delightful');
     component.itemForm.controls['quantity'].setValue('88');
     component.itemForm.controls['price'].setValue('29.99');
 
-    expect(component.itemForm.valid).toBeTrue();
+    expect(component.itemForm.valid).toBeTrue();                      // Validate the form
   });
 
   it('should call addItem and navigate on successful form submission', () => {
-    const date = new Date().toISOString();
+    const date = new Date().toISOString();  // Get the current date
 
-    const addItemDTO: AddItemDTO = {
+    const addItemDTO: AddItemDTO = {        // Create the item to be added
       categoryId: 11,
       supplierId: 12,
       name: 'whizgig',
@@ -82,18 +83,18 @@ describe('ItemAddComponent', () => {
     spyOn(itemService, 'addItem').and.returnValue(of(mockItem));
     spyOn(router, 'navigate');
 
-    component.itemForm.controls['category'].setValue(addItemDTO.categoryId);
+    component.itemForm.controls['category'].setValue(addItemDTO.categoryId);  // Fill in the form details with the DTO properties
     component.itemForm.controls['supplier'].setValue(addItemDTO.supplierId);
     component.itemForm.controls['name'].setValue(addItemDTO.name);
     component.itemForm.controls['description'].setValue(addItemDTO.description);
     component.itemForm.controls['quantity'].setValue(addItemDTO.quantity);
     component.itemForm.controls['price'].setValue(addItemDTO.price);
-    component.onSubmit();
+    component.onSubmit();                                                     // Call the addItem service
 
-    expect(itemService.addItem).toHaveBeenCalled();
+    expect(itemService.addItem).toHaveBeenCalled();                           // Check that the addItem service was called
 
     const calledArg = (itemService.addItem as jasmine.Spy).calls.mostRecent().args[0];
-    expect(calledArg.categoryId).toBe(addItemDTO.categoryId);
+    expect(calledArg.categoryId).toBe(addItemDTO.categoryId);                 // Check that the addItem service was called with the details of the DTO
     expect(calledArg.supplierId).toBe(addItemDTO.supplierId);
     expect(calledArg.name).toBe(addItemDTO.name);
     expect(calledArg.description).toBe(addItemDTO.description);
@@ -103,22 +104,22 @@ describe('ItemAddComponent', () => {
     expect(typeof calledArg.dateCreated).toBe('string');
     expect(Date.parse(calledArg.dateCreated)).not.toBeNaN();
 
-    expect(router.navigate).toHaveBeenCalledWith(['/items']);
+    expect(router.navigate).toHaveBeenCalledWith(['/items']);                 // Navigate back to Item List upon success
   });
 
   it('should handle error on form submission failure', () => {
-    spyOn(itemService, 'addItem').and.returnValue(throwError('Error creating item'));
+    spyOn(itemService, 'addItem').and.returnValue(throwError('Error creating item')); // Simulate an error
     spyOn(console, 'error');
 
-    component.itemForm.controls['category'].setValue('Electronics');
+    component.itemForm.controls['category'].setValue('Electronics');                  // Add some data to the form
     component.itemForm.controls['supplier'].setValue('Tech Tonic');
     component.itemForm.controls['name'].setValue('Test');
     component.itemForm.controls['description'].setValue('Truly delightful');
     component.itemForm.controls['quantity'].setValue('88');
     component.itemForm.controls['price'].setValue('29.99');
-    component.onSubmit();
+    component.onSubmit();                                                             // Submit the form
 
-    expect(itemService.addItem).toHaveBeenCalled();
+    expect(itemService.addItem).toHaveBeenCalled();                                   // Check for an error message
     expect(console.error).toHaveBeenCalledWith('Error creating item', 'Error creating item');
   });
 });

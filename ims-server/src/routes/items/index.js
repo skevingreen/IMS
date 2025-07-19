@@ -37,6 +37,7 @@ router.get('/:inventoryItemId', async (req, res, next) => {
     if (!tempItem) {
       return res.status(404).send({ message: 'Item not found' });
     }
+    
     res.send(tempItem);
   } catch (err) {
     console.error(`Error while getting item: ${err}`);
@@ -142,4 +143,5 @@ router.delete('/:inventoryItemId', async (req, res) => {
     res.status(500).json({ message: 'Database error' });
   }
 });
+
 module.exports = router;
