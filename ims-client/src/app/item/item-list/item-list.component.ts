@@ -30,7 +30,7 @@ import { CategoryService } from '../../category/category.service';
           <option value="">All Categories</option>
           <!-- Take the list of categories returned from the database and populate the filter dropdown. -->
           @for(category of categories; track category) {
-            <option value="{{ category.categoryId }}">{{ category.categoryName }}</option>
+            <option value="{{ category.categoryId }}">{{ category.categoryId }} - {{ category.categoryName }}</option>
           }
         </select>
 
