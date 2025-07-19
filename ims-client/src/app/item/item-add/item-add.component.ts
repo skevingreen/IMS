@@ -204,7 +204,7 @@ export class ItemAddComponent {
   // Save the new inventoryItem
   onSubmit() {
     if (this.itemForm.valid) {
-      const dateCreated = new Date().toISOString();                     // Item is new so set the date to now
+      const dateNow = new Date().toISOString();                         // Item is new so set the date to now
 
       const newItem: AddItemDTO = {                                     // Created the AddItemDTO to be added to the database
         categoryId: parseInt(this.itemForm.controls['category'].value), // Set the categoryId to the integer form of the selected category's id
@@ -213,7 +213,7 @@ export class ItemAddComponent {
         description: this.itemForm.controls['description'].value,       // Set the description based on form description
         quantity: parseInt(this.itemForm.controls['quantity'].value),   // Set the quantity to the integer version of the form's quantity
         price: parseFloat(this.itemForm.controls['price'].value),       // Set the price to the float version of the form's price
-        dateCreated: dateCreated                                        // Use the variable created above to set the date
+        dateCreated: dateNow                                            // Use the variable created above to set the date
       }
 
       this.itemService.addItem(newItem).subscribe({                     // Call the addItem function of the itemService to add the new item to the database

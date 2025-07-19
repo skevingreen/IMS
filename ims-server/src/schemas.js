@@ -16,9 +16,8 @@ const addItemSchema = {
     description: { type: 'string', maxLength: 500 },
     price: { type: 'number' },
     dateCreated: { type: 'string', pattern: '^(\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z)?$' },
-    dateModified: { type: 'string', pattern: '^(\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z)?$' }
   },
-  required: ['categoryId', 'supplierId', 'name', 'description', 'price', 'dateCreated', 'dateModified'],
+  required: ['categoryId', 'supplierId', 'name', 'description', 'price', 'dateCreated'],
   additionalProperties: true
 };
 
