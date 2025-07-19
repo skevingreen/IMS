@@ -27,7 +27,7 @@ import { CategoryService } from '../../category/category.service';
         <!-- save the categoryId in filterType -->
         <select [(ngModel)]="filterType" class="item-page__filter" required>
           <!-- Show "All" categories selected by default. -->
-          <option value="" disabled>All Categories</option>
+          <option value="">All Categories</option>
           <!-- Take the list of categories returned from the database and populate the filter dropdown. -->
           @for(category of categories; track category) {
             <option value="{{ category.categoryId }}">{{ category.categoryName }}</option>
@@ -226,6 +226,17 @@ export class ItemListComponent {
     private route: ActivatedRoute,
     private router: Router
   ) {
+    this.getAllItems(); // show all items by default
+
+    // Retrieve a list of all categories from the database
+    this.categoryService.getCategories().subscribe({
+      next: (categories: any) => {
+        this.categories = categories;
+      }
+    });
+  }
+
+  getAllItems() {
     // Retrieve a list of all items from the database
     this.itemService.getItems().subscribe({
       next: (items: Item[]) => {
@@ -234,13 +245,6 @@ export class ItemListComponent {
       error: (err: any) => {
         console.error(`Error occurred while retrieving items: ${err}`);
         this.items = [];
-      }
-    });
-
-    // Retrieve a list of all categories from the database
-    this.categoryService.getCategories().subscribe({
-      next: (categories: any) => {
-        this.categories = categories;
       }
     });
   }
@@ -275,15 +279,18 @@ export class ItemListComponent {
   }
 
   filterItems() {
-    // Call item service to query for a list of items that match the selected category
-    this.itemService.searchItems(this.filterType).subscribe({
-      next: (items: Item[]) => {
-        this.items = items;                                       // assign the retrieved items for a specific category
-      },
-      error: (err: any) => {
-        console.error('Error retrieving items by category', err); // note any errors
-        this.items = [];                                          // clear out the list of items
-      }
-    });
+    if (this.filterType === '') {
+      this.getAllItems();                                           // if all categories is select, show everything
+    } else {
+      this.itemService.searchItems(this.filterType).subscribe({
+        next: (items: Item[]) => {
+          this.items = items;                                       // assign the retrieved items for a specific category
+        },
+        error: (err: any) => {
+          console.error('Error retrieving items by category', err); // note any errors
+          this.items = [];                                          // clear out the list of items
+        }
+      });
+    }
   }
 }
