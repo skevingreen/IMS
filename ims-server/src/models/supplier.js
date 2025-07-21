@@ -8,13 +8,24 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+// Define the counter schema
+let counterSchema = new Schema({
+  _id: { type: String, required: true },  // sequence name, e.g. 'supplierId'
+  seq: { type: Number, default: 0 }
+});
+
+// Create a counter model
+const Counter = mongoose.model('Counter', counterSchema);
+
+// Define the supplier schema
 let supplierSchema = new Schema({
   _id: {
     type: String,
   },
   supplierId: {
     type: Number,
-    required: [true, 'Supplier supplierId is required'] // validations
+    required: [true, 'Supplier supplierId is required'], // validations
+    unique: true
   },
   supplierName: {
     type: String,
@@ -38,13 +49,31 @@ let supplierSchema = new Schema({
   }
 }, {collection: 'Suppliers'});
 
-supplierSchema.pre('save', function(next) { // pre db hook
-  if (!this.isNew) {                        // when record saved, date modified is updated
-    this.dateModified = new Date().toISOString();
+// Pre-validate hook to auto-increment supplierId if new doc, else update dateModified
+supplierSchema.pre('validate', async function(next) {
+  const doc = this;
+
+  if (doc.isNew) {
+    try {
+      const counter = await Counter.findByIdAndUpdate(
+        { _id: 'supplierId' },
+        { $inc: { seq: 1 } },
+        { new: true, upsert: true }
+      );
+      doc.supplierId = counter.seq;
+      next();
+    } catch (err) {
+      console.error('Error in Counter.findByIdAndUpdate:', err);
+      next(err);
+    }
+  } else {
+    doc.dateModified = new Date();
+    next();
   }
-  next();
-})
+});
+
 
 module.exports = {
-  Supplier: mongoose.model('Supplier', supplierSchema)
+  Supplier: mongoose.model('Supplier', supplierSchema),
+  Counter: Counter
 }

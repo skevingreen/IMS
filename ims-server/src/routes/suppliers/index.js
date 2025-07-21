@@ -12,7 +12,9 @@ const router = express.Router();
 const { addSupplierSchema /*, updateGardenSchema*/ } = require('../../schemas');
 const { Supplier } = require('../../models/supplier');
 
+
 const ajv = new Ajv();
+const validateAddSupplier = ajv.compile(addSupplierSchema);
 //const validateAddItem = ajv.compile(addSupplierSchema);
 //const validateUpdateItem = ajv.compile(updateItemSchema);
 
@@ -28,4 +30,29 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+// Create a supplier
+router.post('/', async (req, res, next) => {
+  try {
+    const valid = validateAddSupplier(req.body); // validate request body
+
+    if (!valid) {
+      return next(createError(400, ajv.errorsText(validateAddSupplier.errors)));
+    }
+
+    const payload = {
+      ...req.body
+    };
+
+    const supplier = new Supplier(payload);
+    await supplier.save();
+
+    res.send({
+      message: 'Supplier created successfully',
+      id: supplier._id
+    });
+  } catch (err) {
+    console.error(`Error while creating supplier: ${err}`);
+    next(err);
+  }
+});
 module.exports = router;
