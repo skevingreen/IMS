@@ -45,32 +45,24 @@ import { AddSupplierDTO } from '../supplier';
     </div>
   `,
   styles: `
+     /* .supplier-add styles */
     .supplier-add-page {
       max-width: 80%;
       margin: 0 auto;
       padding: 20px;
-      color: #563d7c;
     }
 
     .supplier-add-page__title {
       text-align: center;
-      color: #563d7c;
+      color: rgb(112, 177, 247);
     }
 
     .supplier-add-page__subtitle {
       text-align: center;
-      color: #563d7c;
+      color: rgb(112, 177, 247);
       font-size: 0.9rem;
       font-style: italic;
       margin-bottom: 20px;
-    }
-
-    .supplier-add-page__card {
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      padding: 20px;
-      margin-top: 20px;
     }
 
     .supplier-add-page__form {
@@ -86,6 +78,7 @@ import { AddSupplierDTO } from '../supplier';
       display: block;
       margin-bottom: 5px;
       font-weight: bold;
+      color: rgb(112, 177, 247);
     }
 
     .supplier-add-page__form-control {
@@ -98,7 +91,7 @@ import { AddSupplierDTO } from '../supplier';
 
     .supplier-add-page__btn {
       padding: 10px 15px;
-      background-color: #563d7c;
+      background-color: rgb(112, 177, 247);
       color: #fff;
       border: none;
       border-radius: 4px;
@@ -107,11 +100,11 @@ import { AddSupplierDTO } from '../supplier';
     }
 
     .supplier-add-page__btn:hover {
-      background-color: #452a63;
+      background-color: rgb(28, 11, 153);
     }
 
     .supplier-add-page__link {
-      color: #563d7c;
+      color: rgb(112, 177, 247);
       text-decoration: none;
       display: block;
     }
