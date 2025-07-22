@@ -10,6 +10,9 @@ export interface Supplier {
   supplierName: string;
   contactInformation: string;
   address: string;
-  dateCreated: Date;
-  dateModified?: Date;
+  dateCreated: string;
+  dateModified?: string;
 }
+
+export type AddSupplierDTO = Omit<Supplier, '_id' | 'supplierId' | 'dateModified'>;
+export type UpdateSupplierDTO = Omit<Supplier, '_id' | 'supplierId' | 'dateCreated' | 'dateModified'>;
