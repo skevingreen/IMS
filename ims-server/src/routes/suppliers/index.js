@@ -15,8 +15,6 @@ const { Supplier } = require('../../models/supplier');
 
 const ajv = new Ajv();
 const validateAddSupplier = ajv.compile(addSupplierSchema);
-//const validateAddItem = ajv.compile(addSupplierSchema);
-//const validateUpdateItem = ajv.compile(updateItemSchema);
 
 // Get a list of all suppliers
 router.get('/', async (req, res, next) => {

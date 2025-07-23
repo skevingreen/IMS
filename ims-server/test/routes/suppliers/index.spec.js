@@ -87,7 +87,7 @@ describe('POST /api/suppliers', () => {
       });
 
       expect(response.status).toBe(400);
-      expect(response.body.message).toContain('must NOT have fewer than 3 characters');
+      expect(response.body.message).toContain('data/supplierName must NOT have fewer than 1 characters');
     });
 
     it('should handle errors during supplier creation', async () => {

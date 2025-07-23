@@ -1,6 +1,6 @@
 /**
  * Authors: Dua Hasan, Scott Green
- * Date: 4 July 2025
+ * Date: 22 July 2025
  * File: supplier.js
  * Description: Mongoose model for supplier documents.
  */
@@ -19,9 +19,9 @@ const Counter = mongoose.model('Counter', counterSchema);
 
 // Define the supplier schema
 let supplierSchema = new Schema({
-  _id: {
-    type: String,
-  },
+  // _id: {
+  //   type: String,
+  // },
   supplierId: {
     type: Number,
     required: [true, 'Supplier supplierId is required'], // validations
@@ -40,6 +40,12 @@ let supplierSchema = new Schema({
     minlength: [12, 'Supplier contactInformation must be at least 12 character'],
     maxlength: [12, 'Supplier contactInformation cannot exceed 12 characters']
   },
+  address: {
+    type: String,
+    required: [true, 'Supplier address is required'],
+    minlength: [2, 'Supplier contactInformation must be at least 2 characters'],
+    maxlength: [100, 'Supplier contactInformation cannot exceed 100 characters']
+  },
   dateCreated: {
     type: Date,
     default: Date.now
@@ -53,7 +59,7 @@ let supplierSchema = new Schema({
 supplierSchema.pre('validate', async function(next) {
   const doc = this;
 
-  if (doc.isNew) {
+  if (this.isNew) {
     try {
       const counter = await Counter.findByIdAndUpdate(
         { _id: 'supplierId' },
@@ -71,7 +77,6 @@ supplierSchema.pre('validate', async function(next) {
     next();
   }
 });
-
 
 module.exports = {
   Supplier: mongoose.model('Supplier', supplierSchema),

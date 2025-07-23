@@ -5,7 +5,7 @@
  * Description: Schema for database operations.
  */
 
-// Ajv validation schemas
+// Ajv validation schemas for items
 const addItemSchema = {
   type: 'object',
   properties: {
@@ -34,7 +34,21 @@ const updateItemSchema = {
   additionalProperties: true
 };
 
+// Ajv validation schemas for suppliers
+const addSupplierSchema = {
+  type: 'object',
+  properties: {
+    //supplierId: { type: 'number' },
+    supplierName: { type: 'string', minLength: 1, maxLength: 100 },
+    contactInformation: { type: 'string', minLength: 12, maxLength: 12 },
+    address: { type: 'string', minLength: 2, maxLength: 100}
+  },
+  required: [/*'supplierId',*/ 'supplierName', 'contactInformation', 'address' ],
+  additionalProperties: true
+};
+
 module.exports = {
   addItemSchema,
-  updateItemSchema
+  updateItemSchema,
+  addSupplierSchema
 };

@@ -224,6 +224,8 @@ export class ItemAddComponent {
           console.error('Error creating item', err);                    // Catch any errors and log them to the console
         }
       });
+    } else {
+      alert('Please complete all fields.');
     }
   }
 }

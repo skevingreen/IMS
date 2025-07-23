@@ -36,22 +36,24 @@ describe('SupplierListComponent', () => {
 
   // Tests for listing all suppliers
   it('should display records in the DOM', () => {
+    const currentDate = new Date().toISOString();
+
     const mockSuppliers: Supplier[] = [
       { _id: '12345',
         supplierId: 3,
         supplierName: 'Supplier 1',
         contactInformation: '555-555-5555',
         address: '555 55th St',
-        dateCreated: new Date,
-        dateModified: new Date
+        dateCreated: currentDate,
+        dateModified: currentDate
       },
       { _id: '67890',
         supplierId: 4,
         supplierName: 'Supplier 2',
         contactInformation: '444-444-4444',
         address: '444 44th St',
-        dateCreated: new Date,
-        dateModified: new Date
+        dateCreated: currentDate,
+        dateModified: currentDate
       }
     ];
 

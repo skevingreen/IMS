@@ -146,6 +146,8 @@ export class SupplierAddComponent {
           console.error('Error creating supplier', error);
         }
       });
+    } else {
+      alert('Please complete all fields.');
     }
   }
 }

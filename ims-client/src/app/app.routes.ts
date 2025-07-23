@@ -11,6 +11,7 @@ import { ItemListComponent } from './item/item-list/item-list.component';
 import { SupplierListComponent } from './supplier/supplier-list/supplier-list.component';
 import { ItemDetailsComponent } from './item/item-details/item-details.component';
 import { ItemAddComponent } from './item/item-add/item-add.component';
+import { SupplierAddComponent } from './supplier/supplier-add/supplier-add.component';
 
 export const routes: Routes = [
   {
@@ -32,5 +33,9 @@ export const routes: Routes = [
   {
     path: 'suppliers',
     component: SupplierListComponent
+  },
+  {
+    path: 'suppliers/add',
+    component: SupplierAddComponent
   }
 ];
